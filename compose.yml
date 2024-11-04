@@ -189,7 +189,7 @@ services:
     depends_on:
       - synapse
 
-  matrix-authentication-service:
+  mas:
     image: ghcr.io/element-hq/matrix-authentication-service:latest
     restart: unless-stopped
     # ports:

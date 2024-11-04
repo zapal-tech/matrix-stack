@@ -95,7 +95,7 @@ email:
 experimental_features:
   msc3861: # OIDC
     enabled: true
-    issuer: http://matrix-authentication-service:8080/
+    issuer: http://mas:8080/
     client_id: ${MAS_CLIENT_ID}
     client_auth_method: client_secret_basic
     client_secret: '${SECRETS_MAS_CLIENT_SECRET}'
