@@ -58,6 +58,8 @@ services:
       - "80:80"
       - "443:443"
       - "8448:8448"
+    # shutdown fast so we can iterate rapidly on compose.yml
+    stop_grace_period: 0s
     volumes:
       - ${VOLUME_PATH}/data/nginx/conf.d:/etc/nginx/conf.d
       - ${VOLUME_PATH}/data/nginx/www:/var/www
@@ -65,9 +67,23 @@ services:
       # - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
       # - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    networks:
+      - backend
     depends_on:
       init:
         condition: service_completed_successfully
+      # synapse:
+      #   condition: service_started
+      # synapse-generic-worker-1:
+      #   condition: service_started
+      # synapse-federation-sender-1:
+      #   condition: service_started
+      # matrix-authentication-service:
+      #   condition: service_started
+      # element-web:
+      #   condition: service_started
+      # element-call:
+      #   condition: service_started
 
   # certbot:
   #   image: certbot/certbot:latest
@@ -115,8 +131,8 @@ services:
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-    ports:
-      - 8008:8008
+    # ports:
+    #   - 8008:8008
     networks:
       - backend
     environment:
@@ -147,8 +163,8 @@ services:
       SYNAPSE_WORKER: synapse.app.generic_worker
     # Expose port if required so your reverse proxy can send requests to this worker
     # Port configuration will depend on how the http listener is defined in the worker configuration file
-    ports:
-      - 8081:8081
+    # ports:
+    #   - 8081:8081
     secrets:
       - synapse_signing_key
     depends_on:
@@ -166,6 +182,8 @@ services:
       - ${VOLUME_PATH}/data/synapse:/data:rw # Replace VOLUME_PATH with the path to your Synapse volume
     environment:
       SYNAPSE_WORKER: synapse.app.federation_sender
+    # ports:
+    #   - 8082:8082
     secrets:
       - synapse_signing_key
     depends_on:
@@ -174,8 +192,8 @@ services:
   matrix-authentication-service:
     image: ghcr.io/element-hq/matrix-authentication-service:latest
     restart: unless-stopped
-    ports:
-      - 8083:8080
+    # ports:
+    #   - 8083:8080
     volumes:
       - ${VOLUME_PATH}/data/mas:/data:rw
     networks:
@@ -194,15 +212,15 @@ services:
     restart: unless-stopped
     ports:
       - 8025:8025
-      - 1025:1025
+      # - 1025:1025
     networks:
       - backend
 
   element-web:
     image: vectorim/element-web:latest
     restart: unless-stopped
-    ports:
-      - 8080:80
+    # ports:
+    #   - 8080:80
     healthcheck:
       test: ["CMD-SHELL", "curl -fSs http://localhost:8080/version || exit 1"]
       start_period: "5s"
@@ -219,8 +237,8 @@ services:
   element-call:
     image: ghcr.io/element-hq/element-call
     restart: unless-stopped
-    ports:
-      - 8082:80
+    # ports:
+    #   - 8082:80
     networks:
       - backend
     volumes:
