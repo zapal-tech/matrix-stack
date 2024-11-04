@@ -1,0 +1,14 @@
+{
+    "m.homeserver": {
+        "base_url": "https://${HOMESERVER_FQDN}"
+    },
+    "m.identity_server": {
+        "base_url": "${IDENTITY_SERVER_URL}"
+    },
+    "org.matrix.msc4143.rtc_foci": [
+        {
+            "type": "livekit",
+            "livekit_service_url": "https://${ELEMENT_CALL_FQDN}"
+        }
+    ]
+}

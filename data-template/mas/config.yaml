@@ -1,0 +1,101 @@
+${CONFIG_HEADER}
+
+http:
+  listeners:
+  - name: web
+    resources:
+    - name: discovery
+    - name: human
+    - name: oauth
+    - name: compat
+    - name: graphql
+    - name: assets
+    binds:
+    - address: '[::]:8080'
+    proxy_protocol: false
+  - name: internal
+    resources:
+    - name: health
+    binds:
+    - host: localhost
+      port: 8081
+    proxy_protocol: false
+  trusted_proxies:
+  - 192.168.0.0/16
+  - 172.16.0.0/12
+  - 10.0.0.0/10
+  - 127.0.0.1/8
+  - fd00::/8
+  - ::1/128
+  public_base: http://[::]:8080/
+  issuer: http://[::]:8080/
+database:
+  host: postgres
+  database: mas
+  username: matrix
+  password: ${SECRETS_POSTGRES_PASSWORD}
+  max_connections: 10
+  min_connections: 0
+  connect_timeout: 30
+  idle_timeout: 600
+  max_lifetime: 1800
+email:
+  from: '${MAS_EMAIL_FROM}'
+  reply_to: '${MAS_EMAIL_REPLY_TO}'
+  transport: smtp
+  mode: plain
+  hostname: mailhog
+  port: 1025
+${SECRETS_MAS_SECRETS}
+passwords:
+  enabled: true
+  schemes:
+  - version: 1
+    algorithm: argon2id
+  minimum_complexity: 3
+matrix:
+  homeserver: localhost:8008
+  secret: '${SECRETS_MAS_MATRIX_SECRET}'
+  endpoint: http://localhost:8008/
+
+# please keep config above this point as close as possible to the original generated config
+# so that upstream generated config changes can be detected
+
+# these taken from midhun's quick-mas-setup
+clients:
+  - client_id: ${MAS_CLIENT_ID}
+    client_auth_method: client_secret_basic
+    client_secret: '${SECRETS_MAS_CLIENT_SECRET}'
+
+templates:
+  path: /usr/local/share/mas-cli/templates/
+  assets_manifest: /usr/local/share/mas-cli/manifest.json
+  translations_path: /usr/local/share/mas-cli/translations/
+
+policy:
+  wasm_module: /usr/local/share/mas-cli/policy.wasm
+  client_registration_entrypoint: client_registration/violation
+  register_entrypoint: register/violation
+  authorization_grant_entrypoint: authorization_grant/violation
+  password_entrypoint: password/violation
+  email_entrypoint: email/violation
+  data:
+    client_registration:
+      allow_insecure_uris: true # allow non-SSL and localhost URIs
+      allow_missing_contacts: true # EW doesn't have contacts at this time
+    admin_users:
+        - admin
+
+branding:
+  service_name: null
+  policy_uri: null
+  tos_uri: null
+  imprint: null
+  logo_uri: null
+
+upstream_oauth2:
+  providers: []
+
+experimental:
+  access_token_ttl: 86400
+  compat_token_ttl: 86400
