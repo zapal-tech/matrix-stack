@@ -51,20 +51,23 @@ services:
       generate-mas-secrets:
         condition: service_completed_successfully
 
-  # nginx:
-  #   image: nginx:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ${VOLUME_PATH}/data/nginx:/etc/nginx/conf.d
-  #     - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
-  #     - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
-  #   command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
-  #   depends_on:
-  #     init:
-  #       condition: service_completed_successfully
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8448:8448"
+    volumes:
+      - ${VOLUME_PATH}/data/nginx/conf.d:/etc/nginx/conf.d
+      - ${VOLUME_PATH}/data/nginx/www:/var/www
+      - ${VOLUME_PATH}/data/nginx/ssl:/etc/nginx/ssl
+      # - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
+      # - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
   # certbot:
   #   image: certbot/certbot:latest
@@ -226,16 +229,16 @@ services:
       init:
         condition: service_completed_successfully
 
-  # livekit-server:
-  #   image: livekit/livekit-server:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - 7880:7880 # HTTP API
-  #     - 7881:7881 # WS signalling
-  #     # - 50000-60000:50000-60000/tcp # TCP media
-  #     # - 50000-60000:50000-60000/udp # UDP media
-  #   networks:
-  #     - backend
-  #   depends_on:
-  #     init:
-  #       condition: service_completed_successfully
+  livekit-server:
+    image: livekit/livekit-server:latest
+    restart: unless-stopped
+    ports:
+      - 7880:7880 # HTTP API
+      - 7881:7881 # WS signalling
+      # - 50000-60000:50000-60000/tcp # TCP media
+      # - 50000-60000:50000-60000/udp # UDP media
+    networks:
+      - backend
+    depends_on:
+      init:
+        condition: service_completed_successfully

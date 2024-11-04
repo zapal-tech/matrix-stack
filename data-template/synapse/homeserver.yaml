@@ -48,6 +48,8 @@ trusted_key_servers:
 # please keep config above this point as close as possible to the original generated config
 # so that upstream generated config changes can be detected
 
+suppress_key_server_warning: true
+
 send_federation: false
 federation_sender_instances:
   - synapse-federation-sender-1
