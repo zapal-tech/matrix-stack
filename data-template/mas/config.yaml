@@ -27,8 +27,8 @@ http:
   - 127.0.0.1/8
   - fd00::/8
   - ::1/128
-  public_base: http://[::]:8080/
-  issuer: http://[::]:8080/
+  public_base: https://${MAS_FQDN}/
+  issuer: https://${MAS_FQDN}/
 database:
   host: postgres
   database: mas
