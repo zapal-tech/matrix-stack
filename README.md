@@ -16,6 +16,8 @@ cp .env-sample .env
 docker compose up
 ```
 
+![Screenshot 2024-11-04 at 03 05 28](https://github.com/user-attachments/assets/c3127f3c-ae0c-43cb-bfe9-88f4be56e0af)
+
 ## Todo
 
  * [ ] sort out the networking
