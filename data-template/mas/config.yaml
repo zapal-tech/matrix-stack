@@ -28,7 +28,7 @@ http:
   - fd00::/8
   - ::1/128
   public_base: https://${MAS_FQDN}/
-  issuer: https://${MAS_FQDN}/
+  issuer: https://${DOMAIN}/
 database:
   host: postgres
   database: mas
@@ -54,9 +54,9 @@ passwords:
     algorithm: argon2id
   minimum_complexity: 3
 matrix:
-  homeserver: localhost:8008
+  homeserver: ${DOMAIN}
   secret: '${SECRETS_MAS_MATRIX_SECRET}'
-  endpoint: http://localhost:8008/
+  endpoint: http://synapse:8008/
 
 # please keep config above this point as close as possible to the original generated config
 # so that upstream generated config changes can be detected

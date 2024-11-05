@@ -5,6 +5,10 @@
     "m.identity_server": {
         "base_url": "${IDENTITY_SERVER_URL}"
     },
+    "org.matrix.msc2965.authentication": {
+        "issuer": "https://${DOMAIN}/",
+        "account": "https://${MAS_FQDN}/account"
+    },
     "org.matrix.msc4143.rtc_foci": [
         {
             "type": "livekit",
