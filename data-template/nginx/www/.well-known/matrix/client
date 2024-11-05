@@ -12,7 +12,7 @@
     "org.matrix.msc4143.rtc_foci": [
         {
             "type": "livekit",
-            "livekit_service_url": "https://${LIVEKIT_FQDN}"
+            "livekit_service_url": "https://${LIVEKIT_JWT_FQDN}"
         }
     ]
 }
