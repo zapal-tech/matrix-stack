@@ -42,6 +42,16 @@ then
 	head -c16 /dev/urandom | base64 | tr -d '=' > /secrets/postgres/postgres_password
 fi
 
+mkdir -p /secrets/livekit
+if [[ ! -f /secrets/livekit/livekit_api_key ]]
+then
+	(echo -n API; (head -c8 /dev/urandom | base64)) | tr -d '=' > /secrets/livekit/livekit_api_key
+fi
+if [[ ! -f /secrets/livekit/livekit_secret_key ]]
+then
+	head -c28 /dev/urandom | base64 | tr -d '=' > /secrets/livekit/livekit_secret_key
+fi
+
 # TODO: compare the default generated config with our templates to see if our templates are stale
 # we'd have to strip out the secrets from the generated configs to be able to diff them sensibly
 
@@ -76,6 +86,12 @@ export DOLLAR='$' # evil hack to escape dollars in config files
 	export SECRETS_MAS_CLIENT_SECRET=$(</secrets/mas/client.secret)
 	export SECRETS_POSTGRES_PASSWORD=$(</secrets/postgres/postgres_password)
 	template "/data-template/mas"
+)
+
+(
+	export SECRETS_LIVEKIT_API_KEY=$(</secrets/livekit/livekit_api_key)
+	export SECRETS_LIVEKIT_SECRET_KEY=$(</secrets/livekit/livekit_secret_key)
+	template "/data-template/livekit"
 )
 
 template "/data-template/element-web"

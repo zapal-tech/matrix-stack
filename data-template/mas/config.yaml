@@ -86,6 +86,9 @@ policy:
     admin_users:
         - admin
 
+account:
+  password_registration_enabled: false
+
 branding:
   service_name: null
   policy_uri: null

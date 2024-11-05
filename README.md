@@ -25,7 +25,7 @@ cp "$(mkcert -CAROOT)"/rootCA.pem data/nginx/ssl
 
 # make an .env to configure your environment
 cp .env-sample .env
-sed -ie s/example.com/$DOMAIN/ .env
+sed -ir s/example.com/$DOMAIN/ .env
 
 docker compose up
 ```

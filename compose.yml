@@ -29,7 +29,6 @@ services:
     image: ghcr.io/element-hq/matrix-authentication-service:latest
     volumes:
       - ${VOLUME_PATH}/data/mas:/data:rw
-    env_file: .env
     # FIXME: stop this regenerating a spurious default config every time
     # We can't do the same approach as synapse (unless use a debug image of MAS) as MAS is distroless and has no bash.
     command: "config generate -o /data/config.yaml.default"
@@ -78,18 +77,8 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
-      # synapse:
-      #   condition: service_started
-      # synapse-generic-worker-1:
-      #   condition: service_started
-      # synapse-federation-sender-1:
-      #   condition: service_started
-      # matrix-authentication-service:
-      #   condition: service_started
-      # element-web:
-      #   condition: service_started
-      # element-call:
-      #   condition: service_started
+      synapse:
+        condition: service_started
 
   # certbot:
   #   image: certbot/certbot:latest
@@ -129,6 +118,11 @@ services:
   redis:
     image: redis:latest
     restart: unless-stopped
+    # healthcheck:
+    #   test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+    #   interval: 1s
+    #   timeout: 3s
+    #   retries: 5
     networks:
       - backend
 
@@ -148,6 +142,8 @@ services:
     secrets:
       - synapse_signing_key
     depends_on:
+      redis:
+        condition: service_started
       postgres:
         condition: service_healthy
       init:
@@ -257,11 +253,14 @@ services:
       init:
         condition: service_completed_successfully
 
-  livekit-server:
+  livekit:
     image: livekit/livekit-server:latest
     restart: unless-stopped
+    volumes:
+      - ${VOLUME_PATH}/data/livekit/config.yaml:/etc/livekit.yaml
+    command: --config /etc/livekit.yaml --node-ip ${LIVEKIT_NODE_IP}
     ports:
-      - 7880:7880 # HTTP API
+      # - 7880:7880 # HTTP listener
       - 7881:7881 # WS signalling
       # - 50000-60000:50000-60000/tcp # TCP media
       # - 50000-60000:50000-60000/udp # UDP media
@@ -270,3 +269,5 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+      redis:
+        condition: service_started

@@ -17,7 +17,11 @@
     "default_widget_container_height": 280,
     "default_country_code": "${COUNTRY}",
     "show_labs_settings": false,
-    "features": {},
+    "features": {
+        "feature_video_rooms": true,
+        "feature_group_calls": true,
+        "feature_element_call_video_rooms": true
+    },
     "default_federate": true,
     "default_theme": "light",
     "room_directory": {
@@ -27,8 +31,7 @@
         "breadcrumbs": true
     },
     "element_call": {
-        "url": "https://${ELEMENT_CALL_FQDN}",
-        "brand": "Element Call"
+        "url": "https://${ELEMENT_CALL_FQDN}"
     },
     "map_style_url": "https://api.maptiler.com/maps/streets/style.json?key=fU3vlMsMn4Jb6dnEIFsx"
 }
