@@ -56,7 +56,7 @@ passwords:
 matrix:
   homeserver: ${DOMAIN}
   secret: '${SECRETS_MAS_MATRIX_SECRET}'
-  endpoint: http://synapse:8008/
+  endpoint: https://${HOMESERVER_FQDN}/
 
 # please keep config above this point as close as possible to the original generated config
 # so that upstream generated config changes can be detected
