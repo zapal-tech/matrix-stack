@@ -56,5 +56,6 @@ docker compose exec mas mas-cli -c /data/config.yaml doctor
  * [x] sort out the networking
  * [x] make nginx do something useful when running on a local workstation
  * [ ] hook up letsencrypt to nginx properly
- * [ ] hook up livekit properly
- * [ ] make it work
+ * [x] hook up livekit properly
+ * [x] make it work
+ 

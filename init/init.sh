@@ -9,7 +9,7 @@ set -e
 # by this point, synapse & mas should generated default config files & secrets
 # via generate-synapse-secrets.sh and generate-mas-secrets.sh
 
-if [[ ! -f /secrets/synapse/${DOMAIN}.signing.key ]] # TODO: check for existence of other secrets?
+if [[ ! -s /secrets/synapse/signing.key ]] # TODO: check for existence of other secrets?
 then
 	# extract synapse secrets from the config and move them into ./secrets
 	echo "Extracting generated synapse secrets..."
@@ -19,7 +19,7 @@ then
 		yq .$secret /data/synapse/homeserver.yaml.default > /secrets/synapse/$secret
 	done
 	# ...and files too, just to keep all our secrets in one place
-	mv /data/synapse/${DOMAIN}.signing.key /secrets/synapse
+	mv /data/synapse/${DOMAIN}.signing.key /secrets/synapse/signing.key
 fi
 
 if [[ ! -f /secrets/mas/secrets ]] # TODO: check for existence of other secrets?
@@ -36,18 +36,18 @@ then
 	head -c16 /dev/urandom | base64 | tr -d '=' > /secrets/mas/client.secret
 fi
 
-if [[ ! -f /secrets/postgres/postgres_password ]]
+if [[ ! -s /secrets/postgres/postgres_password ]]
 then
 	mkdir -p /secrets/postgres
 	head -c16 /dev/urandom | base64 | tr -d '=' > /secrets/postgres/postgres_password
 fi
 
 mkdir -p /secrets/livekit
-if [[ ! -f /secrets/livekit/livekit_api_key ]]
+if [[ ! -s /secrets/livekit/livekit_api_key ]]
 then
 	(echo -n API; (head -c8 /dev/urandom | base64)) | tr -d '=' > /secrets/livekit/livekit_api_key
 fi
-if [[ ! -f /secrets/livekit/livekit_secret_key ]]
+if [[ ! -s /secrets/livekit/livekit_secret_key ]]
 then
 	head -c28 /dev/urandom | base64 | tr -d '=' > /secrets/livekit/livekit_secret_key
 fi

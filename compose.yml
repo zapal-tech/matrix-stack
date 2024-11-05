@@ -6,13 +6,15 @@ secrets:
   postgres_password:
     file: secrets/postgres/postgres_password
   synapse_signing_key:
-    file: secrets/synapse/${DOMAIN}.signing.key
+    file: secrets/synapse/signing.key
   livekit_api_key:
     file: secrets/livekit/livekit_api_key
   livekit_secret_key:
     file: secrets/livekit/livekit_secret_key
 
 services:
+  # XXX: consider factor out secret generation from the compose.yml
+
   # dependencies for optionally generating default configs + secrets
   generate-synapse-secrets:
     image: ghcr.io/element-hq/synapse:latest
@@ -287,6 +289,7 @@ services:
     build:
       # evil hack to pull in bash so we can run an entrypoint.sh
       # FIXME: it's a bit wasteful; the alternative would be to modify lk-jwt-service to pick up secrets from disk
+      # Another alternative would be to factor out secret generation from compose.yml and create an .env up front
       dockerfile_inline: |
         FROM ghcr.io/element-hq/lk-jwt-service:latest-ci AS builder
         FROM alpine:latest
