@@ -1,6 +1,6 @@
 # element-quick-start
 
-WIP of a docker-copmose Matrix 2.0 stack to show off EW + EC + EX + Synapse + MAS + livekit.
+WIP of a docker-compose Matrix 2.0 stack to show off EW + EC + EX + Synapse + MAS + livekit.
 
 Not remotely intended for serious production usage, but just to be the simplest possible way to get a
 hacker-friendly Matrix 2.0 stack up and running without requiring any k8s.
