@@ -62,7 +62,6 @@ services:
 
   nginx:
     image: nginx:latest
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     ports:
       - "80:80"
@@ -104,7 +103,6 @@ services:
 
   postgres:
     image: postgres:latest
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/postgres:/var/lib/postgresql/data:rw
@@ -129,7 +127,6 @@ services:
 
   redis:
     image: redis:latest
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     # healthcheck:
     #   test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
@@ -212,7 +209,6 @@ services:
 
   mas:
     image: ghcr.io/element-hq/matrix-authentication-service:latest
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     # ports:
     #   - 8083:8080
@@ -232,7 +228,6 @@ services:
   # as a basic local MTA
   mailhog:
     image: mailhog/mailhog:latest
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     ports:
       - 8025:8025
@@ -242,7 +237,6 @@ services:
 
   element-web:
     image: vectorim/element-web:latest
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     # ports:
     #   - 8080:80
@@ -261,7 +255,6 @@ services:
 
   element-call:
     image: ghcr.io/element-hq/element-call
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     # ports:
     #   - 8082:80
@@ -275,7 +268,6 @@ services:
 
   livekit:
     image: livekit/livekit-server:latest
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/livekit/config.yaml:/etc/livekit.yaml
@@ -310,7 +302,6 @@ services:
         FROM alpine:latest
         RUN apk update && apk add bash
         COPY --from=builder /lk-jwt-service /
-    user: $USER_ID:$GROUP_ID
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/nginx/ssl/rootCA.pem:/etc/ssl/certs/ca-certificates.crt
