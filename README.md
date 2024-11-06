@@ -1,4 +1,4 @@
-# element-quick-start
+# element-docker-demo
 
 WIP of a docker-compose Matrix 2.0 stack to show off EW + EC + EX + Synapse + MAS + livekit.
 
