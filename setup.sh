@@ -22,7 +22,7 @@ if [[ ! -e .env  ]]; then
     sed -ir s/^GROUP_ID=/GROUP_ID=$(id -g)/ .env
 
     read -p "Enter base domain name (e.g. example.com): " DOMAIN
-    sed -ir s/^example.com/$DOMAIN/ .env
+    sed -ir s/example.com/$DOMAIN/ .env
 
     # SSL setup
     mkdir -p data/certbot/{conf,www} # stop broken binds
