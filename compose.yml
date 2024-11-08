@@ -72,9 +72,7 @@ services:
     volumes:
       - ${VOLUME_PATH}/data/nginx/conf.d:/etc/nginx/conf.d
       - ${VOLUME_PATH}/data/nginx/www:/var/www
-      - ${VOLUME_PATH}/data/nginx/ssl:/etc/nginx/ssl
-      # - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
-      # - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
+      - ${VOLUME_PATH}/data/ssl:/etc/nginx/ssl
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     networks:
       backend:
@@ -90,16 +88,18 @@ services:
       synapse:
         condition: service_started
 
-  # certbot:
-  #   image: certbot/certbot:latest
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
-  #     - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
-  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-  #   depends_on:
-  #     init:
-  #       condition: service_completed_successfully
+  certbot:
+    image: certbot/certbot:latest
+    restart: unless-stopped
+    volumes:
+      - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
+      - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      nginx:
+        condition: service_started
 
   postgres:
     image: postgres:latest
@@ -143,7 +143,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      - ${VOLUME_PATH}/data/nginx/ssl/rootCA.pem:/etc/ssl/certs/ca-certificates.crt
+      - ${VOLUME_PATH}/data/nginx/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     # ports:
     #   - 8008:8008
     networks:
@@ -175,7 +175,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      - ${VOLUME_PATH}/data/nginx/ssl/rootCA.pem:/etc/ssl/certs/ca-certificates.crt
+      - ${VOLUME_PATH}/data/nginx/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     # Expose port if required so your reverse proxy can send requests to this worker
@@ -198,7 +198,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw # Replace VOLUME_PATH with the path to your Synapse volume
-      - ${VOLUME_PATH}/data/nginx/ssl/rootCA.pem:/etc/ssl/certs/ca-certificates.crt
+      - ${VOLUME_PATH}/data/nginx/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.federation_sender
     # ports:
@@ -215,7 +215,7 @@ services:
     #   - 8083:8080
     volumes:
       - ${VOLUME_PATH}/data/mas:/data:rw
-      - ${VOLUME_PATH}/data/nginx/ssl/rootCA.pem:/etc/ssl/certs/ca-certificates.crt
+      - ${VOLUME_PATH}/data/nginx/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     networks:
       - backend
     # FIXME: do we also need to sync the db?
@@ -305,7 +305,7 @@ services:
         COPY --from=builder /lk-jwt-service /
     restart: unless-stopped
     volumes:
-      - ${VOLUME_PATH}/data/nginx/ssl/rootCA.pem:/etc/ssl/certs/ca-certificates.crt
+      - ${VOLUME_PATH}/data/nginx/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
       - ${VOLUME_PATH}/init/livekit-jwt-entrypoint.sh:/entrypoint.sh
     entrypoint: /entrypoint.sh
     env_file: .env

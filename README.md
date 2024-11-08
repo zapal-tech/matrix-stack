@@ -11,22 +11,7 @@ into their ESS counterparts, and rehoming the postgres).
 ## To run
 
 ```
-# pick a domain name:
-DOMAIN=shadowfax.local
-
-# grab a TLS certificate for the server:
-brew install mkcert || apt-get install mkcert
-mkcert -install
-mkcert $DOMAIN '*.'$DOMAIN
-mkdir -p data/nginx/ssl
-mv ${DOMAIN}+1.pem data/nginx/ssl/cert.pem
-mv ${DOMAIN}+1-key.pem data/nginx/ssl/key.pem
-cp "$(mkcert -CAROOT)"/rootCA.pem data/nginx/ssl
-
-# make an .env to configure your environment
-cp .env-sample .env
-sed -ir s/example.com/$DOMAIN/ .env
-
+./setup.sh
 docker compose up
 ```
 
@@ -55,7 +40,7 @@ docker compose exec mas mas-cli -c /data/config.yaml doctor
 
  * [x] sort out the networking
  * [x] make nginx do something useful when running on a local workstation
- * [ ] hook up letsencrypt to nginx properly
+ * [x] hook up letsencrypt to nginx properly
  * [x] hook up livekit properly
  * [x] make it work
  
