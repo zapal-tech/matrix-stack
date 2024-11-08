@@ -32,7 +32,7 @@ Install [Docker Compose](https://docs.docker.com/compose/install/). Then:
 docker compose up
 ```
 
-![Screenshot 2024-11-04 at 03 05 28](https://github.com/user-attachments/assets/c3127f3c-ae0c-43cb-bfe9-88f4be56e0af)
+![docker demo](https://github.com/user-attachments/assets/c17e42f7-3442-478a-9ae4-ad2709885386)
 
 ## To configure
 
