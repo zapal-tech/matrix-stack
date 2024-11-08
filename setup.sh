@@ -21,9 +21,12 @@ if [[ ! -e .env  ]]; then
     sed -ir s/^USER_ID=/USER_ID=$(id -u)/ .env
     sed -ir s/^GROUP_ID=/GROUP_ID=$(id -g)/ .env
 
-    NODE_IP=`getent hosts livekit.$DOMAIN | cut -d' ' -f1`
-    if ! [ -z "$NODE_IP" ]; then
-	    sed -ir s/LIVEKIT_NODE_IP=127.0.0.1/LIVEKIT_NODE_IP=$NODE_IP/ .env
+    # try to guess your livekit IP
+    if [ -x "$(command -v getent)" ]; then
+        NODE_IP=`getent hosts livekit.$DOMAIN | cut -d' ' -f1`
+        if ! [ -z "$NODE_IP" ]; then
+            sed -ir s/LIVEKIT_NODE_IP=127.0.0.1/LIVEKIT_NODE_IP=$NODE_IP/ .env
+        fi
     fi
 
     read -p "Enter base domain name (e.g. example.com): " DOMAIN
