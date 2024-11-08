@@ -44,12 +44,9 @@ if [[ ! -e .env  ]]; then
     else
         read -p "Use letsencrypt for SSL? [y/n] " use_letsencrypt
         if [[ use_letsencrypt =~ [Yy] ]]; then
-	    mkdir -p data/certbot/conf/live/$DOMAIN
-	    if [[ ! -L data/ssl ]]; then
-                ln -s ../data/certbot/conf/live/$DOMAIN data/ssl
-	    fi
+	    mkdir -p data/ssl
             touch data/ssl/ca-certificates.crt # will get overwritten by init-letsencrypt.sh
-            exec ./init-letsencrypt.sh
+            source ./init-letsencrypt.sh
         else
             echo "Please put a valid {privkey,fullchain}.pem and ca-certificates.crt into data/ssl/"
         fi
