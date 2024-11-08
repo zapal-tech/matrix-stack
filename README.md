@@ -15,7 +15,7 @@ This is **not** intended for serious production usage, but instead as a tool for
 with Matrix 2.0 in a simple docker compose environment.  As of Nov 2024, it's considered beta.
 
 In particular, this has:
- * No support or maintenance guarantees whatsoever 
+ * No support, security or maintenance guarantees whatsoever
  * No high availability, horizontal scalability, elastic scaling, clustering, backup etc.
  * No admin interface
  * No UDP traffic or TURN for LiveKit (all traffic is tunnelled over TCP for simplicity)
