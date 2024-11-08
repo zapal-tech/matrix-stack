@@ -44,8 +44,8 @@ email:
   reply_to: '${MAS_EMAIL_REPLY_TO}'
   transport: smtp
   mode: plain
-  hostname: mailhog
-  port: 1025
+  hostname: ${SMTP_HOST}
+  port: ${SMTP_PORT}
 ${SECRETS_MAS_SECRETS}
 passwords:
   enabled: true

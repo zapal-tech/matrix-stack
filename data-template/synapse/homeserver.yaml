@@ -70,8 +70,8 @@ background_updates:
     sleep_enabled: false
 
 email:
-  smtp_host: mailhog
-  smtp_port: 1025
+  smtp_host: ${SMTP_HOST}
+  smtp_port: ${SMTP_PORT}
   enable_tls: false
   notif_from: "Your %(app)s homeserver <${MAIL_NOTIF_FROM_ADDRESS}>"
   app_name: Matrix
