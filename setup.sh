@@ -27,7 +27,7 @@ if [[ ! -e .env  ]]; then
     # SSL setup
     read -p "Use local mkcert CA for SSL? [y/n] " use_mkcert
     if [[ "$use_mkcert" =~ ^[Yy]$ ]]; then
-        if [[ ! -x mkcert ]]; then
+	if ! [ -x "$(command -v mkcert)" ]; then
             echo "Please install mkcert from brew/apt/yum etc"
 	    exit
         fi
@@ -40,16 +40,22 @@ if [[ ! -e .env  ]]; then
         # borrow letsencrypt's SSL config
         curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > "data/ssl/options-ssl-nginx.conf"
         curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > "data/ssl/ssl-dhparams.pem"
+        success=true
     else
         read -p "Use letsencrypt for SSL? [y/n] " use_letsencrypt
         if [[ "$use_letsencrypt" =~ ^[Yy]$ ]]; then
 	    mkdir -p data/ssl
             touch data/ssl/ca-certificates.crt # will get overwritten by init-letsencrypt.sh
             source ./init-letsencrypt.sh
+            success=true
         else
             echo "Please put a valid {privkey,fullchain}.pem and ca-certificates.crt into data/ssl/"
         fi
     fi
 else
     echo ".env already exists; move it out of the way first to re-setup"
+fi
+
+if ! [ -z "$success" ]; then
+    echo ".env and SSL configured; you can now docker compose up"
 fi
