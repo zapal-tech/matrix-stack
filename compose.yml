@@ -106,7 +106,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/postgres:/var/lib/postgresql/data:rw
-      - ${VOLUME_PATH}/data-template/postgres/create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
+      - ${VOLUME_PATH}/scripts/create-multiple-postgresql-databases.sh:/docker-entrypoint-initdb.d/create-multiple-postgresql-databases.sh
     networks:
       - backend
     environment:
@@ -306,7 +306,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/nginx/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - ${VOLUME_PATH}/init/livekit-jwt-entrypoint.sh:/entrypoint.sh
+      - ${VOLUME_PATH}/scripts/livekit-jwt-entrypoint.sh:/entrypoint.sh
     entrypoint: /entrypoint.sh
     env_file: .env
     deploy:
