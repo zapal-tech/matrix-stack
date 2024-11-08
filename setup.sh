@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-set -x
+#set -x
 
 # set up data & secrets dir with the right ownerships in the default location
 # to stop docker autocreating them with random owners.
@@ -25,9 +25,8 @@ if [[ ! -e .env  ]]; then
     sed -ir s/example.com/$DOMAIN/ .env
 
     # SSL setup
-    mkdir -p data/certbot/{conf,www} # stop broken binds
     read -p "Use local mkcert CA for SSL? [y/n] " use_mkcert
-    if [[ use_mkcert =~ [Yy] ]]; then
+    if [[ "$use_mkcert" =~ ^[Yy]$ ]]; then
         if [[ ! -x mkcert ]]; then
             echo "Please install mkcert from brew/apt/yum etc"
 	    exit
@@ -40,10 +39,10 @@ if [[ ! -e .env  ]]; then
         cp "$(mkcert -CAROOT)"/rootCA.pem data/ssl/ca-certificates.crt
         # borrow letsencrypt's SSL config
         curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf > "data/ssl/options-ssl-nginx.conf"
-          curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > "data/ssl/ssl-dhparams.pem"
+        curl -s https://raw.githubusercontent.com/certbot/certbot/master/certbot/certbot/ssl-dhparams.pem > "data/ssl/ssl-dhparams.pem"
     else
         read -p "Use letsencrypt for SSL? [y/n] " use_letsencrypt
-        if [[ use_letsencrypt =~ [Yy] ]]; then
+        if [[ "$use_letsencrypt" =~ ^[Yy]$ ]]; then
 	    mkdir -p data/ssl
             touch data/ssl/ca-certificates.crt # will get overwritten by init-letsencrypt.sh
             source ./init-letsencrypt.sh

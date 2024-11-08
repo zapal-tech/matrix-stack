@@ -95,7 +95,7 @@ services:
       - ${VOLUME_PATH}/data/ssl:/data/ssl
     entrypoint: "/bin/sh -c 'trap exit TERM; \
                  while [ -e /etc/letsencrypt/live ]; \
-                 do certbot --webroot -w /var/www/certbot renew; \
+                 do sleep 30; certbot --webroot -w /var/www/certbot renew; \
                  cp /etc/letsencrypt/live/$DOMAIN/*.pem /data/ssl; \
                  sleep 12h & wait $${!}; \
                  done;'"

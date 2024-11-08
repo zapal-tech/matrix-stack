@@ -2,15 +2,15 @@
 
 # taken from https://raw.githubusercontent.com/wmnnd/nginx-certbot/refs/heads/master/init-letsencrypt.sh
 
-set -x
+#set -x
 
 if ! [ -x "$(command -v docker)" ]; then
   echo 'Error: docker is not installed.' >&2
   exit 1
 fi
 
-. .env
-domains=$DOMAINS
+source .env
+domains=("${DOMAINS[@]}") # deep copy the array
 rsa_key_size=4096
 data_path="./data/certbot"
 read -p "admin email address for letsencrypt: " email
