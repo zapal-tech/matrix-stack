@@ -21,6 +21,9 @@ if [[ ! -e .env  ]]; then
     sed -ir s/^USER_ID=/USER_ID=$(id -u)/ .env
     sed -ir s/^GROUP_ID=/GROUP_ID=$(id -g)/ .env
 
+    read -p "Enter base domain name (e.g. example.com): " DOMAIN
+    sed -ir s/example.com/$DOMAIN/ .env
+
     # try to guess your livekit IP
     if [ -x "$(command -v getent)" ]; then
         NODE_IP=`getent hosts livekit.$DOMAIN | cut -d' ' -f1`
@@ -28,9 +31,6 @@ if [[ ! -e .env  ]]; then
             sed -ir s/LIVEKIT_NODE_IP=127.0.0.1/LIVEKIT_NODE_IP=$NODE_IP/ .env
         fi
     fi
-
-    read -p "Enter base domain name (e.g. example.com): " DOMAIN
-    sed -ir s/example.com/$DOMAIN/ .env
 
     # SSL setup
     read -p "Use local mkcert CA for SSL? [y/n] " use_mkcert
