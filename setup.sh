@@ -18,17 +18,17 @@ touch secrets/livekit/livekit_{api,secret}_key \
 if [[ ! -e .env  ]]; then
     cp .env-sample .env
 
-    sed -ir s/^USER_ID=/USER_ID=$(id -u)/ .env
-    sed -ir s/^GROUP_ID=/GROUP_ID=$(id -g)/ .env
+    sed -ri s/^USER_ID=/USER_ID=$(id -u)/ .env
+    sed -ri s/^GROUP_ID=/GROUP_ID=$(id -g)/ .env
 
     read -p "Enter base domain name (e.g. example.com): " DOMAIN
-    sed -ir s/example.com/$DOMAIN/ .env
+    sed -ri s/example.com/$DOMAIN/ .env
 
     # try to guess your livekit IP
     if [ -x "$(command -v getent)" ]; then
         NODE_IP=`getent hosts livekit.$DOMAIN | cut -d' ' -f1`
         if ! [ -z "$NODE_IP" ]; then
-            sed -ir s/LIVEKIT_NODE_IP=127.0.0.1/LIVEKIT_NODE_IP=$NODE_IP/ .env
+            sed -ri s/LIVEKIT_NODE_IP=127.0.0.1/LIVEKIT_NODE_IP=$NODE_IP/ .env
         fi
     fi
 
