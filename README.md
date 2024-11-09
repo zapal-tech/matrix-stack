@@ -28,7 +28,10 @@ For production-grade Matrix from Element, please see https://element.io/server-s
 
 ## To run
 
- Install [Docker Compose](https://docs.docker.com/compose/install/). Then:
+ 1. Install [Docker Compose](https://docs.docker.com/compose/install/).
+ 2. If you're running on your local workstation, then [install mkcert](https://github.com/FiloSottile/mkcert#installation) to manage TLS.
+
+Then:
 
 ```
 ./setup.sh
