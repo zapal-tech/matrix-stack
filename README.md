@@ -18,6 +18,8 @@ In particular, this has:
  * No support, security or maintenance guarantees whatsoever
  * No high availability, horizontal scalability, elastic scaling, clustering, backup etc.
  * No admin interface
+ * No fancy config management (eg ansible), just env vars and templates
+ * No fancy secret management (stored in plaintext on disk)
  * No UDP traffic or TURN for LiveKit (all traffic is tunnelled over TCP for simplicity)
  * No integration manager, integrations, or identity lookup server
 
@@ -25,11 +27,17 @@ For production-grade Matrix from Element, please see https://element.io/server-s
 
 ## To run
 
-Install [Docker Compose](https://docs.docker.com/compose/install/). Then:
+ Install [Docker Compose](https://docs.docker.com/compose/install/). Then:
 
 ```
 ./setup.sh
+
+# Point DNS for *.`domain` at your docker host,
+# Or if running on localhost with mkcert:
+# source .env; sudo echo "127.0.0.1 ${DOMAINS[@]}" >> /etc/hosts
+
 docker compose up
+# go to https://element on your domain.
 ```
 
 ![docker demo](https://github.com/user-attachments/assets/c17e42f7-3442-478a-9ae4-ad2709885386)
