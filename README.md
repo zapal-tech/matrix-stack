@@ -32,7 +32,7 @@ For production-grade Matrix from Element, please see https://element.io/server-s
 ```
 ./setup.sh
 
-# Point DNS for *.`domain` at your docker host,
+# Point DNS for *.domain at your docker host,
 # Or if running on localhost with mkcert:
 # source .env; sudo echo "127.0.0.1 ${DOMAINS[@]}" >> /etc/hosts
 
