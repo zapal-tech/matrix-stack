@@ -55,6 +55,10 @@ In particular, you may wish to:
  * Use your own reverse proxy rather than the provided nginx
  * Use your own database cluster
 
+Container data gets stored in `./data`, and secrets in `./secrets`.
+N.B. that config files in `./data` will get overwritten by the templates from `./data-template` every time the cluster
+is launched.
+
 ## To admin
 
 ```
