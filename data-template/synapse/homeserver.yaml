@@ -48,6 +48,7 @@ trusted_key_servers:
 # please keep config above this point as close as possible to the original generated config
 # so that upstream generated config changes can be detected
 
+public_baseurl: https://${HOMESERVER_FQDN}/
 suppress_key_server_warning: true
 
 send_federation: false
@@ -101,6 +102,9 @@ experimental_features:
     client_secret: '${SECRETS_MAS_CLIENT_SECRET}'
     admin_token: '${SECRETS_MAS_MATRIX_SECRET}'
     account_management_url: "https://${MAS_FQDN}/account"
+
+  # QR login
+  msc4108_enabled: true
 
   # MSC3266: Room summary API. Used for knocking over federation
   msc3266_enabled: true
