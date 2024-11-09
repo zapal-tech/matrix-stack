@@ -38,7 +38,7 @@ Then:
 
 # Point DNS for *.domain at your docker host,
 # Or if running on localhost with mkcert:
-# source .env; sudo sh -c echo "127.0.0.1 $DOMAINS >> /etc/hosts"
+# source .env; sudo sh -c "echo 127.0.0.1 $DOMAINS >> /etc/hosts"
 
 docker compose up
 # go to https://element on your domain.
