@@ -10,7 +10,7 @@ if ! [ -x "$(command -v docker)" ]; then
 fi
 
 source .env
-domains=("${DOMAINS[@]}") # deep copy the array
+domains=($DOMAINS)
 rsa_key_size=4096
 data_path="./data/certbot"
 read -p "admin email address for letsencrypt: " email
