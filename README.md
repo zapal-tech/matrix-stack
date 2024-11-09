@@ -68,6 +68,5 @@ docker compose exec mas mas-cli -c /data/config.yaml doctor
 
 ## Todo
 
- * [ ] set up MSC4108 QR login in MAS
  * [ ] swap nginx for caddy or traefik to simplify Letsencrypt
  * [ ] set up livekit TURN (tcp & udp port 443) for better firewall traversal and voip performance
