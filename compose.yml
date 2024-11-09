@@ -236,7 +236,7 @@ services:
       - backend
 
   element-web:
-    image: vectorim/element-web:latest
+    image: vectorim/element-web:develop
     restart: unless-stopped
     # ports:
     #   - 8080:80
@@ -254,7 +254,7 @@ services:
         condition: service_completed_successfully
 
   element-call:
-    image: ghcr.io/element-hq/element-call
+    image: ghcr.io/element-hq/element-call:latest-ci
     restart: unless-stopped
     # ports:
     #   - 8082:80

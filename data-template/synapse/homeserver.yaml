@@ -93,6 +93,12 @@ email:
     password_reset: "[%(server_name)s] Password reset"
     email_validation: "[%(server_name)s] Validate your email"
 
+
+# temporarily boost rate-limits to avoid breaking WIP MatrixRTC signalling
+rc_message:
+  per_second: 2
+  burst_count: 15
+
 experimental_features:
   msc3861: # OIDC
     enabled: true
