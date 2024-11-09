@@ -18,6 +18,7 @@ In particular, this has:
  * No support, security or maintenance guarantees whatsoever
  * No high availability, horizontal scalability, elastic scaling, clustering, backup etc.
  * No admin interface
+ * No monitoring
  * No fancy config management (eg ansible), just env vars and templates
  * No fancy secret management (stored in plaintext on disk)
  * No UDP traffic or TURN for LiveKit (all traffic is tunnelled over TCP for simplicity)
@@ -64,3 +65,9 @@ docker compose exec mas mas-cli -c /data/config.yaml manage register-user
 # check that OIDC is working - useful for debugging TLS problems
 docker compose exec mas mas-cli -c /data/config.yaml doctor
 ````
+
+## Todo
+
+ * [ ] set up MSC4108 QR login in MAS
+ * [ ] swap nginx for caddy or traefik to simplify Letsencrypt
+ * [ ] set up livekit TURN (tcp & udp port 443) for better firewall traversal and voip performance
