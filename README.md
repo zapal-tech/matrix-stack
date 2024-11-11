@@ -50,9 +50,10 @@ Watch the full video:
 
 <div align="left">
       <a href="https://www.youtube.com/watch?v=6iMi5BiQcoI">
-         <img src="https://img.youtube.com/vi/6iMi5BiQcoI/maxresdefault.jpg" style="width:100%;">
+         <img src="https://img.youtube.com/vi/6iMi5BiQcoI/maxresdefault.jpg" style="width:100%; border: 1px solid">
       </a>
 </div>
+<br/>
 
 For more info, see https://element.io/blog/experimenting-with-matrix-2-0-using-element-docker-demo/
 
