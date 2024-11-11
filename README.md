@@ -22,7 +22,7 @@ In particular, this has:
  * No fancy config management (eg ansible), just env vars and templates
  * No fancy secret management (stored in plaintext on disk)
  * No UDP traffic or TURN for LiveKit (all traffic is tunnelled over TCP for simplicity)
- * No integration manager, integrations, or identity lookup server
+ * No push server, integration manager, integrations, or identity lookup server
 
 For production-grade Matrix from Element, please see https://element.io/server-suite (ESS).
 
@@ -75,5 +75,6 @@ docker compose exec mas mas-cli -c /data/config.yaml doctor
 
 ## Todo
 
+ * [ ] test $VOLUME_PATH (or remove it)
  * [ ] swap nginx for caddy or traefik to simplify Letsencrypt
  * [ ] set up livekit TURN (tcp & udp port 443) for better firewall traversal and voip performance
