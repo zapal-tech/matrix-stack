@@ -46,6 +46,14 @@ docker compose up
 
 ![docker demo](https://github.com/user-attachments/assets/c17e42f7-3442-478a-9ae4-ad2709885386)
 
+<div align="left">
+      <a href="https://www.youtube.com/watch?v=6iMi5BiQcoI">
+         <img src="https://img.youtube.com/vi/6iMi5BiQcoI/0.jpg" style="width:100%;">
+      </a>
+</div>
+
+For more info, see https://element.io/blog/experimenting-with-matrix-2-0-using-element-docker-demo/
+
 ## To configure
 
 Check the .env file, or customise the templates in `/data-templates` and then `docker compose down && docker compose up -d`.
@@ -75,6 +83,8 @@ docker compose exec mas mas-cli -c /data/config.yaml doctor
 
 ## Todo
 
+ * [ ] mention this from synapse/contrib/docker*
+ * [ ] pop up https://element in your browser once synapse has started up successfully for the first time, perhaps
  * [ ] test $VOLUME_PATH (or remove it)
  * [ ] swap nginx for caddy or traefik to simplify Letsencrypt
  * [ ] set up livekit TURN (tcp & udp port 443) for better firewall traversal and voip performance
