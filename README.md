@@ -84,6 +84,14 @@ docker compose exec mas mas-cli -c /data/config.yaml manage register-user
 docker compose exec mas mas-cli -c /data/config.yaml doctor
 ````
 
+## Other resources
+
+ * This was originally based on https://github.com/element-hq/synapse/tree/master/contrib/docker_compose_workers
+ * Other guides for MAS and Element Call (without docker-compose) at:
+   * https://sspaeth.de/2024/08/matrix-server-with-nextcloud-login/
+   * https://sspaeth.de/2024/11/sfu/
+ * https://cyberhost.uk/element-matrix-setup/ is a good Matrix 1.0 docker-compose guide too
+
 ## Todo
 
  * [ ] mention this from synapse/contrib/docker*
@@ -91,3 +99,4 @@ docker compose exec mas mas-cli -c /data/config.yaml doctor
  * [ ] test $VOLUME_PATH (or remove it)
  * [ ] swap nginx for caddy or traefik to simplify Letsencrypt
  * [ ] set up livekit TURN (tcp & udp port 443) for better firewall traversal and voip performance
+
