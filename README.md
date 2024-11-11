@@ -46,9 +46,11 @@ docker compose up
 
 ![docker demo](https://github.com/user-attachments/assets/c17e42f7-3442-478a-9ae4-ad2709885386)
 
+Watch the full video:
+
 <div align="left">
       <a href="https://www.youtube.com/watch?v=6iMi5BiQcoI">
-         <img src="https://img.youtube.com/vi/6iMi5BiQcoI/0.jpg" style="width:100%;">
+         <img src="https://img.youtube.com/vi/6iMi5BiQcoI/maxresdefault.jpg" style="width:100%;">
       </a>
 </div>
 
