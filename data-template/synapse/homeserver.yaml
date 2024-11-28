@@ -122,7 +122,7 @@ experimental_features:
 # The maximum allowed duration by which sent events can be delayed, as
 # per MSC4140. Must be a positive value if set.  Defaults to no
 # duration (null), which disallows sending delayed events.
-# Needed for MatrixRTC
+# Needed for MatrixRTC to avoid stuck calls
 max_event_delay_duration: 24h
 
 # vim:ft=yaml
