@@ -14,7 +14,7 @@ then
 	# extract synapse secrets from the config and move them into ./secrets
 	echo "Extracting generated synapse secrets..."
 	mkdir -p /secrets/synapse
-	for secret in registration_shared_secret macaroon_secret_key form_secret
+	for secret in registration_shared_secret macaroon_secret_key form_secret pepper_secret
 	do
 		yq .$secret /data/synapse/homeserver.yaml.default > /secrets/synapse/$secret
 	done
@@ -74,6 +74,7 @@ export DOLLAR='$' # evil hack to escape dollars in config files
 	export SECRETS_SYNAPSE_REGISTRATION_SHARED_SECRET=$(</secrets/synapse/registration_shared_secret)
 	export SECRETS_SYNAPSE_MACAROON_SECRET_KEY=$(</secrets/synapse/macaroon_secret_key)
 	export SECRETS_SYNAPSE_FORM_SECRET=$(</secrets/synapse/form_secret)
+	export SECRETS_SYNAPSE_PEPPER_SECRET=$(</secrets/synapse/pepper_secret)
 	export SECRETS_MAS_MATRIX_SECRET=$(</secrets/mas/matrix.secret)
 	export SECRETS_MAS_CLIENT_SECRET=$(</secrets/mas/client.secret)
 	export SECRETS_POSTGRES_PASSWORD=$(</secrets/postgres/postgres_password)

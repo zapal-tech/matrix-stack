@@ -1,4 +1,4 @@
-${CONFIG_HEADER}
+# ${CONFIG_HEADER}
 # From https://github.com/livekit/livekit/blob/master/config-sample.yaml
 
 # Copyright 2024 LiveKit, Inc.
@@ -63,7 +63,7 @@ rtc:
   # this port *cannot* be behind load balancer or TLS, and must be exposed on the node
   # WebRTC transports are encrypted and do not require additional encryption
   # only 80/443 on public IP are allowed if less than 1024
-  tcp_port: 7881
+  # tcp_port: 7881
   # when set to true, attempts to discover the host's public IP via STUN
   # this is useful for cloud environments such as AWS & Google where hosts have an internal IP
   # that maps to an external one
@@ -151,7 +151,7 @@ rtc:
 # Keys are used for JWT authentication, server APIs would require a keypair in order to generate access tokens
 # and make calls to the server
 keys:
-  ${SECRETS_LIVEKIT_API_KEY}: '${SECRETS_LIVEKIT_SECRET_KEY}'
+  ${SECRETS_LIVEKIT_API_KEY}: "${SECRETS_LIVEKIT_SECRET_KEY}"
 # Logging config
 # logging:
 #   # log level, valid values: debug, info, warn, error

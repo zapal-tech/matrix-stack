@@ -1,7 +1,7 @@
 {
   "default_server_config": {
     "m.homeserver": {
-      "base_url": "https://${ELEMENT_CALL_FQDN}",
+      "base_url": "https://${CALL_CLIENT_FQDN}",
       "server_name": "${DOMAIN}"
     }
   },

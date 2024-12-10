@@ -1,0 +1,17 @@
+# ${CONFIG_HEADER}
+
+worker_app: synapse.app.generic_worker
+worker_name: generic-worker-1
+
+worker_listeners:
+  - type: http
+    port: 8034
+    resources:
+      - names: [replication]
+  - type: http
+    port: 8035
+    x_forwarded: true
+    resources:
+      - names: [client, federation]
+
+worker_log_config: /data/log.yaml

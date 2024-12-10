@@ -1,0 +1,12 @@
+# ${CONFIG_HEADER}
+
+worker_app: synapse.app.generic_worker
+worker_name: federation-sender-and-pusher-1
+
+worker_listeners:
+  - type: http
+    port: 8034
+    resources:
+      - names: [replication]
+
+worker_log_config: /data/log.yaml

@@ -11,4 +11,4 @@ then
 fi
 
 echo "MAS config not found - generating default for secrets"
-exec mas-cli config generate -o /data/config.yaml.default
+exec mas-cli config generate -o /data/mas/config.yaml.default

@@ -1,6 +1,0 @@
-${CONFIG_HEADER}
-
-worker_app: synapse.app.federation_sender
-worker_name: synapse-federation-sender-1
-
-worker_log_config: /data/log.config

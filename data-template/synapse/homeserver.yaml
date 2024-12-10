@@ -1,18 +1,9 @@
-${CONFIG_HEADER}
+# ${CONFIG_HEADER}
 
-# Configuration file for Synapse.
-#
-# This is a YAML file: see [1] for a quick introduction. Note in particular
-# that *indentation is important*: all the elements of a list or dictionary
-# should have the same indentation.
-#
-# [1] https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
-#
-# For more information on how to configure Synapse, including a complete accounting of
-# each option, go to docs/usage/configuration/config_documentation.md or
-# https://element-hq.github.io/synapse/latest/usage/configuration/config_documentation.html
 server_name: ${DOMAIN}
+
 pid_file: /data/homeserver.pid
+
 listeners:
   - port: 8008
     tls: false
@@ -27,60 +18,288 @@ listeners:
     resources:
       - names: [replication]
 
-database:
-    name: psycopg2
-    args:
-        user: matrix
-        password: '${SECRETS_POSTGRES_PASSWORD}'
-        host: postgres
-        database: synapse
+web_client_location: "https://${WEB_CLIENT_FQDN}/"
 
-log_config: "/data/log.config"
-media_store_path: /data/media_store
-registration_shared_secret: '${SECRETS_SYNAPSE_REGISTRATION_SHARED_SECRET}'
-report_stats: false
-macaroon_secret_key: '${SECRETS_SYNAPSE_MACAROON_SECRET_KEY}'
-form_secret: '${SECRETS_SYNAPSE_FORM_SECRET}'
-signing_key_path: "/run/secrets/synapse_signing_key"
-trusted_key_servers:
-  - server_name: "matrix.org"
+allow_public_rooms_without_auth: false
 
-# please keep config above this point as close as possible to the original generated config
-# so that upstream generated config changes can be detected
+allow_public_rooms_over_federation: false
 
 public_baseurl: https://${HOMESERVER_FQDN}/
 suppress_key_server_warning: true
 
-send_federation: false
-federation_sender_instances:
-  - synapse-federation-sender-1
+ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - '100.64.0.0/10'
+  - '192.0.0.0/24'
+  - '169.254.0.0/16'
+  - '192.88.99.0/24'
+  - '198.18.0.0/15'
+  - '192.0.2.0/24'
+  - '198.51.100.0/24'
+  - '203.0.113.0/24'
+  - '224.0.0.0/4'
+  - '::1/128'
+  - 'fe80::/10'
+  - 'fc00::/7'
+  - '2001:db8::/32'
+  - 'ff00::/8'
+  - 'fec0::/10'
 
+# Worker secret for authenticated connection
+worker_replication_secret: "${WORKER_REPLICATION_SECRET}"
+
+# Workers map
 instance_map:
   main:
-    host: 'synapse'
+    host: synapse
     port: 9093
+  generic-worker-1:
+    host: synapse-generic-worker-1
+    port: 8034
+  federation-sender-and-pusher-1:
+    host: synapse-federation-sender-and-pusher-1
+    port: 8034
+  federation-sender-and-pusher-2:
+    host: synapse-federation-sender-and-pusher-2
+    port: 8034
+  stream-writer:
+    host: synapse-stream-writer
+    port: 8034
+  app-service:
+    host: synapse-app-service
+    port: 8034
+  background-jobs-1:
+    host: synapse-background-jobs-1
+    port: 8034
+  media-repository-1:
+    host: synapse-media-repository-1
+    port: 8034
 
+# Stream Workers
+stream_writers:
+  events: stream-writer
+  typing: stream-writer
+  to_device: stream-writer
+  account_data: stream-writer
+  receipts: stream-writer
+  presence: stream-writer
+  push_rules: stream-writer
+
+# Pusher workers
+pusher_instances:
+  - federation-sender-and-pusher-1
+  - federation-sender-and-pusher-2
+
+# Federation sender workers
+federation_sender_instances:
+  - federation-sender-and-pusher-1
+  - federation-sender-and-pusher-2
+
+outbound_federation_restricted_to:
+  - federation-sender-and-pusher-1
+  - federation-sender-and-pusher-2
+
+run_background_tasks_on: background-worker-1
+media_instance_running_background_jobs: media-worker-1
+notify_appservices_from_worker: app-service
+
+# Database
+database:
+  name: psycopg2
+  # txn_limit: 10000
+  args:
+    user: matrix
+    password: "${SECRETS_POSTGRES_PASSWORD}"
+    host: postgres
+    database: synapse
+    # seconds of inactivity after which TCP should send a keepalive message to the server
+    keepalives_idle: 10
+    # the number of seconds after which a TCP keepalive message that is not acknowledged by the server should be retransmitted
+    keepalives_interval: 5
+    # the number of TCP keepalives that can be lost before the client's connection to the server is considered dead
+    keepalives_count: 12
+
+# Key-Value storage
 redis:
   enabled: true
   host: redis
   port: 6379
 
-# as we want our first launch and subsequent upgrades to go as fast
-# as possible don't sleep between background updates
-background_updates:
-    sleep_enabled: false
+log_config: "/data/log.yaml"
+
+enable_authenticated_media: true
+
+enable_media_repo: false
+
+media_store_path: "/data/media-store"
+
+max_pending_media_uploads: 10
+
+media_storage_providers:
+  - module: s3_storage_provider.S3StorageProviderBackend
+    store_local: false
+    store_remote: true
+    store_synchronous: true
+    config:
+      bucket: ${S3_STORAGE_PROVIDER_BUCKET}
+      region_name: ${S3_STORAGE_PROVIDER_REGION}
+      endpoint_url: ${S3_STORAGE_PROVIDER_ENDPOINT}
+      access_key_id: ${S3_STORAGE_PROVIDER_ACCESS_KEY_ID}
+      secret_access_key: ${S3_STORAGE_PROVIDER_SECRET_ACCESS_KEY}
+      prefix: ${S3_STORAGE_PROVIDER_REMOTE_MEDIA_PREFIX}
+  - module: s3_storage_provider.S3StorageProviderBackend
+    store_local: true
+    store_remote: false
+    store_synchronous: true
+    config:
+      bucket: ${S3_STORAGE_PROVIDER_BUCKET}
+      region_name: ${S3_STORAGE_PROVIDER_REGION}
+      endpoint_url: ${S3_STORAGE_PROVIDER_ENDPOINT}
+      access_key_id: ${S3_STORAGE_PROVIDER_ACCESS_KEY_ID}
+      secret_access_key: ${S3_STORAGE_PROVIDER_SECRET_ACCESS_KEY}
+      prefix: ${S3_STORAGE_PROVIDER_LOCAL_MEDIA_PREFIX}
+
+max_upload_size: 100M
+
+dynamic_thumbnails: true
+
+thumbnail_sizes:
+  - width: 64
+    height: 64
+    method: crop
+  - width: 96
+    height: 96
+    method: crop
+  - width: 320
+    height: 240
+    method: scale
+  - width: 640
+    height: 480
+    method: scale
+  - width: 800
+    height: 600
+    method: scale
+
+# media_retention:
+#   local_media_lifetime: 40d
+#   remote_media_lifetime: 14d
+
+# signing_key_path: "/data/homeserver.signing.key"
+signing_key_path: "/run/secrets/synapse_signing_key"
+
+trusted_key_servers:
+  - server_name: "${HOMESERVER_FQDN}"
+#  - server_name: "matrix.org"
+
+suppress_key_server_warning: true
+
+enable_registration: false
+
+user_directory:
+  search_all_users: true
+  prefer_local_users: true
+  show_locked_users: false
+
+url_preview_enabled: true
+
+url_preview_accept_language:
+  - en
+  - uk-UA;q=0.9
+  - en-UK;q=0.8
+
+url_preview_ip_range_blacklist:
+  - '127.0.0.0/8'
+  - '10.0.0.0/8'
+  - '172.16.0.0/12'
+  - '192.168.0.0/16'
+  - '100.64.0.0/10'
+  - '192.0.0.0/24'
+  - '169.254.0.0/16'
+  - '192.88.99.0/24'
+  - '198.18.0.0/15'
+  - '192.0.2.0/24'
+  - '198.51.100.0/24'
+  - '203.0.113.0/24'
+  - '224.0.0.0/4'
+  - '::1/128'
+  - 'fe80::/10'
+  - 'fc00::/7'
+  - '2001:db8::/32'
+  - 'ff00::/8'
+  - 'fec0::/10'
+
+registrations_require_3pid:
+  - email
+
+disable_msisdn_registration: true
+
+# This is the default behaviour for our homeserver. Be sure to update or remove this
+allowed_local_3pids:
+  - medium: email
+    pattern: '^[^@]+@zapal\.(tech|design)$'
+
+enable_3pid_lookup: true
+
+registration_shared_secret: "${SECRETS_SYNAPSE_REGISTRATION_SHARED_SECRET}"
+
+admin_contact: "mailto:${ADMIN_EMAIL}"
+
+allow_guest_access: false
+
+default_identity_server: "${IDENTITY_SERVER_URL}"
+
+tls_certificate_path: /data/certs/fullchain.pem
+
+tls_private_key_path: /data/certs/privkey.pem
+
+auto_join_rooms:
+  - "#general:${DOMAIN}"
+
+autocreate_auto_join_rooms: false
+
+auto_join_rooms_for_guests: false
+
+auto_accept_invites:
+  enabled: true
+  only_for_direct_messages: true
+  only_from_local_users: true
+  worker_to_run_on: federation-sender-and-pusher-2
+
+macaroon_secret_key: "${SECRETS_SYNAPSE_MACAROON_SECRET_KEY}"
+
+form_secret: "${SECRETS_SYNAPSE_FORM_SECRET}"
+
+sso:
+  client_whitelist:
+    - "https://${WEB_CLIENT_FQDN}/"
+
+password_config:
+  enabled: true
+  pepper: "${SECRETS_SYNAPSE_PEPPER_SECRET}"
+  policy:
+    enabled: true
+    minimum_length: 16
+    require_digit: true
+    require_symbol: true
+    require_lowercase: true
+    require_uppercase: true
 
 email:
   smtp_host: ${SMTP_HOST}
   smtp_port: ${SMTP_PORT}
-  enable_tls: false
-  notif_from: "Your %(app)s homeserver <${MAIL_NOTIF_FROM_ADDRESS}>"
-  app_name: Matrix
+  smtp_user: ${SMTP_USER}
+  smtp_pass: ${SMTP_PASS}
+  require_transport_security: true
+  notif_from: "%(app)s server <${MAIL_NOTIF_FROM_ADDRESS}>"
+  app_name: ${APP_NAME}
   enable_notifs: true
-  notif_for_new_users: false
-  client_base_url: https://${ELEMENT_WEB_FQDN}
+  notif_for_new_users: true
+  client_base_url: https://${WEB_CLIENT_FQDN}
   validation_token_lifetime: 15m
-  invite_client_location: https://${ELEMENT_WEB_FQDN}
+  invite_client_location: https://${WEB_CLIENT_FQDN}
   subjects:
     message_from_person_in_room: "[%(app)s] You have a message on %(app)s from %(person)s in the %(room)s room..."
     message_from_person: "[%(app)s] You have a message on %(app)s from %(person)s..."
@@ -93,6 +312,33 @@ email:
     password_reset: "[%(server_name)s] Password reset"
     email_validation: "[%(server_name)s] Validate your email"
 
+push:
+  include_content: true
+
+encryption_enabled_by_default_for_room_type: all
+
+enable_group_creation: true
+
+server_notices:
+  system_mxid_localpart: notices
+  system_mxid_display_name: "${BRAND} Notices User"
+  # system_mxid_avatar_url: "mxc://${HOMESERVER_FQDN}/SET_MEDIA_ID_HERE"
+  room_name: "Notices"
+  # room_avatar_url: "mxc://${HOMESERVER_FQDN}/SET_MEDIA_ID_HERE"
+  # room_topic: ""
+  auto_join: true
+
+report_stats: false
+
+# app_service_config_files:
+#   - /opt/hookshot/registration.yml
+
+
+
+
+# as we want our first launch and subsequent upgrades to go as fast as possible don't sleep between background updates
+# background_updates:
+#   sleep_enabled: false
 
 # temporarily boost rate-limits to avoid breaking WIP MatrixRTC signalling
 rc_message:
@@ -105,23 +351,18 @@ experimental_features:
     issuer: https://${DOMAIN}/
     client_id: ${MAS_CLIENT_ID}
     client_auth_method: client_secret_basic
-    client_secret: '${SECRETS_MAS_CLIENT_SECRET}'
-    admin_token: '${SECRETS_MAS_MATRIX_SECRET}'
+    client_secret: "${SECRETS_MAS_CLIENT_SECRET}"
+    admin_token: "${SECRETS_MAS_MATRIX_SECRET}"
     account_management_url: "https://${MAS_FQDN}/account"
-
   # QR login
   msc4108_enabled: true
-
   # MSC3266: Room summary API. Used for knocking over federation
   msc3266_enabled: true
-
-  # state_after in /sync v2, needed for reliable state in busy rooms
-  # especially Element Call
+  # state_after in /sync v2, needed for reliable state in busy rooms, especially Element Call
   msc4222_enabled: true
 
-# The maximum allowed duration by which sent events can be delayed, as
-# per MSC4140. Must be a positive value if set.  Defaults to no
-# duration (null), which disallows sending delayed events.
+# The maximum allowed duration by which sent events can be delayed, as per MSC4140.
+# Must be a positive value if set. Defaults to no duration (null), which disallows sending delayed events.
 # Needed for MatrixRTC to avoid stuck calls
 max_event_delay_duration: 24h
 
