@@ -87,7 +87,7 @@ services:
         condition: service_completed_successfully
 
   # certbot:
-  #   image: certbot/certbot:latest
+  #   image: certbot/dns-cloudflare:latest
   #   restart: unless-stopped
   #   volumes:
   #     - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
@@ -133,6 +133,18 @@ services:
       interval: 1s
       timeout: 3s
       retries: 5
+    networks:
+      - backend
+
+  sydent:
+    image: matrixdotorg/sydent:latest
+    user: $USER_ID:$GROUP_ID
+    environment:
+      SYDENT_SERVER_NAME: ${HOMESERVER_FQDN}
+    # ports:
+    #   - 8090:8090
+    volumes:
+      - ${VOLUME_PATH}/data/sydent:/data:rw
     networks:
       - backend
 
