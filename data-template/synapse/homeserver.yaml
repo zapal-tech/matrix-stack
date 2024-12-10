@@ -49,7 +49,7 @@ ip_range_blacklist:
   - 'fec0::/10'
 
 # Worker secret for authenticated connection
-worker_replication_secret: "${WORKER_REPLICATION_SECRET}"
+worker_replication_secret: "${SECRETS_SYNAPSE_WORKER_REPLICATION_SECRET}"
 
 # Workers map
 instance_map:
