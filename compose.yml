@@ -435,11 +435,11 @@ services:
     # So for now, tunnel everything via TCP 7881. FIXME!
     # - 50000-60000:50000-60000/tcp # TCP media
     # - 50000-60000:50000-60000/udp # UDP media
-    # networks:
-    #   - backend
+    networks:
+      - backend
     network_mode: host
-    extra_hosts:
-      - "backend:127.0.0.1"
+    # extra_hosts:
+    #   - "backend:127.0.0.1"
     depends_on:
       init:
         condition: service_completed_successfully
