@@ -437,7 +437,7 @@ services:
       - 50000-60000:50000-60000/udp # UDP media
     networks:
       - backend
-    network_mode: host
+    # network_mode: host
     # extra_hosts:
     #   - "backend:127.0.0.1"
     depends_on:
