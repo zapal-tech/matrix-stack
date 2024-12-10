@@ -41,7 +41,7 @@ services:
       - ${VOLUME_PATH}/data/mas:/data:rw
     # FIXME: stop this regenerating a spurious default config every time
     # We can't do the same approach as synapse (unless use a debug image of MAS) as MAS is distroless and has no bash.
-    command: "config generate -o /data/mas/config.yaml.default"
+    command: "config generate -o /data/config.yaml.default"
 
   # dependency for templating /data-template into /data (having extracted any secrets from any default generated configs)
   init:
