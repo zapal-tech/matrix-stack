@@ -46,6 +46,8 @@ email:
   mode: plain
   hostname: ${SMTP_HOST}
   port: ${SMTP_PORT}
+  username: ${SMTP_USER}
+  password: ${SECRETS_SMTP_PASSWORD}
 ${SECRETS_MAS_SECRETS}
 passwords:
   enabled: true
