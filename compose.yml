@@ -2,6 +2,8 @@
 
 networks:
   backend:
+  host:
+    external: true
 
 secrets:
   postgres_password:
