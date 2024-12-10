@@ -72,6 +72,7 @@ services:
       - ${VOLUME_PATH}/data/nginx/conf.d:/etc/nginx/conf.d
       - ${VOLUME_PATH}/data/nginx/www:/var/www
       - ${VOLUME_PATH}/data/ssl:/etc/nginx/ssl
+      # - /etc/letsencrypt/live/${DOMAIN}:/etc/nginx/ssl
     command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
     networks:
       backend:
@@ -85,19 +86,19 @@ services:
       init:
         condition: service_completed_successfully
 
-  certbot:
-    image: certbot/certbot:latest
-    restart: unless-stopped
-    volumes:
-      - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
-      - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
-      - ${VOLUME_PATH}/data/ssl:/data/ssl
-    entrypoint: "/bin/sh -c 'trap exit TERM; \
-      while [ -e /etc/letsencrypt/live ]; \
-      do sleep 30; certbot --webroot -w /var/www/certbot renew; \
-      cp /etc/letsencrypt/live/$DOMAIN/*.pem /data/ssl; \
-      sleep 12h & wait $${!}; \
-      done;'"
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/certbot/conf:/etc/letsencrypt
+  #     - ${VOLUME_PATH}/data/certbot/www:/var/www/certbot
+  #     - ${VOLUME_PATH}/data/ssl:/data/ssl
+  #   entrypoint: "/bin/sh -c 'trap exit TERM; \
+  #     while [ -e /etc/letsencrypt/live ]; \
+  #     do sleep 30; certbot --webroot -w /var/www/certbot renew; \
+  #     cp /etc/letsencrypt/live/$DOMAIN/*.pem /data/ssl; \
+  #     sleep 12h & wait $${!}; \
+  #     done;'"
 
   postgres:
     image: postgres:latest
