@@ -423,18 +423,18 @@ services:
     volumes:
       - ${VOLUME_PATH}/data/livekit/config.yaml:/etc/livekit.yaml
     command: --config /etc/livekit.yaml --node-ip ${LIVEKIT_NODE_IP}
-    # ports:
-    # - 7880:7880 # HTTP listener
-    # - 7881:7881 # TCP WebRTC transport, advertised via SDP
+    ports:
+      # - 7880:7880 # HTTP listener
+      # - 7881:7881 # TCP WebRTC transport, advertised via SDP
 
-    # TODO: expose livekit-turn on TCP & UDP 443 via nginx
-    # At least this would allow UDP turn on port 443 for better perf.
+      # TODO: expose livekit-turn on TCP & UDP 443 via nginx
+      # At least this would allow UDP turn on port 443 for better perf.
 
-    # You can't expose a massive range here as it literally sets up 10,000 userland listeners, which takes forever
-    # and will clash with any existing high-numbered ports.
-    # So for now, tunnel everything via TCP 7881. FIXME!
-    # - 50000-60000:50000-60000/tcp # TCP media
-    # - 50000-60000:50000-60000/udp # UDP media
+      # You can't expose a massive range here as it literally sets up 10,000 userland listeners, which takes forever
+      # and will clash with any existing high-numbered ports.
+      # So for now, tunnel everything via TCP 7881. FIXME!
+      - 50000-60000:50000-60000/tcp # TCP media
+      - 50000-60000:50000-60000/udp # UDP media
     networks:
       - backend
     network_mode: host
