@@ -47,7 +47,7 @@ email:
   hostname: ${SMTP_HOST}
   port: ${SMTP_PORT}
   username: ${SMTP_USER}
-  password: ${SECRETS_SMTP_PASSWORD}
+  password: ${SMTP_PASS}
 ${SECRETS_MAS_SECRETS}
 passwords:
   enabled: true
