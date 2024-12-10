@@ -143,8 +143,7 @@ services:
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     # ports:
     #   - 8008:8008
     networks:
@@ -183,8 +182,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     # ports:
@@ -212,8 +210,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     secrets:
@@ -239,8 +236,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     secrets:
@@ -269,8 +265,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     # ports:
@@ -301,8 +296,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     # ports:
@@ -330,8 +324,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     # ports:
@@ -362,8 +355,7 @@ services:
       - backend
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     environment:
       SYNAPSE_WORKER: synapse.app.generic_worker
     # ports:
@@ -380,8 +372,7 @@ services:
     #   - 8083:8080
     volumes:
       - ${VOLUME_PATH}/data/mas:/data:rw
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     networks:
       - backend
     # FIXME: do we also need to sync the db?
@@ -468,8 +459,7 @@ services:
         COPY --from=builder /lk-jwt-service /
     restart: unless-stopped
     volumes:
-      # - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt # Workaround, FIXME
+      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
       - ${VOLUME_PATH}/scripts/livekit-jwt-entrypoint.sh:/entrypoint.sh
     entrypoint: /entrypoint.sh
     env_file: .env
