@@ -59,7 +59,7 @@
   "enable_presence_by_hs_url": {
     "https://${HOMESERVER_FQDN}": true
   },
-  "element_call_COMMENT": {
+  "element_call": {
     "url": "https://${CALL_CLIENT_FQDN}",
     "use_exclusively": true,
     "participant_limit": 15
