@@ -275,6 +275,7 @@ form_secret: "${SECRETS_SYNAPSE_FORM_SECRET}"
 sso:
   client_whitelist:
     - "https://${WEB_CLIENT_FQDN}/"
+    - "https://${ADMIN_WEB_CLIENT_FQDN}/"
 
 # Disable passwork config due to external Matirx Auth Service usage
 # password_config:
