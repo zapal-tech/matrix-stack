@@ -300,6 +300,7 @@ tls_private_key_path: /data/certs/privkey.pem
 
 auto_join_rooms:
   - "#general:${DOMAIN}"
+  - "#random:${DOMAIN}"
 
 autocreate_auto_join_rooms: false
 
