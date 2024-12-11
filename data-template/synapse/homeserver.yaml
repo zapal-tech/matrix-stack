@@ -139,12 +139,12 @@ media_store_path: "/data/media-store"
 max_pending_media_uploads: 10
 
 media_storage_providers:
-  - module: file_system
-    store_local: true
-    store_remote: true
-    store_synchronous: true
-    config:
-       directory: /data/media-storage
+  # - module: file_system
+  #   store_local: true
+  #   store_remote: true
+  #   store_synchronous: true
+  #   config:
+  #      directory: /data/media-storage
   - module: s3_storage_provider.S3StorageProviderBackend
     store_local: false
     store_remote: true
