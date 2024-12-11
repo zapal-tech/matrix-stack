@@ -46,7 +46,7 @@
   },
   "default_federate": true,
   "default_theme": "dark",
-  "permalink_prefix": "https://${HOMESERVER_FQDN}",
+  "permalink_prefix": "https://${WEB_CLIENT_FQDN}",
   "io.element.e2ee": {
     "secure_backup_required": true
   },
