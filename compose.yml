@@ -236,7 +236,7 @@ services:
       - backend
 
   element-web:
-    image: vectorim/element-web:develop
+    image: vectorim/element-web:latest
     restart: unless-stopped
     # ports:
     #   - 8080:80
