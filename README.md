@@ -72,14 +72,19 @@ is launched.
 
 ## To admin
 
+```bash
+# To upgrade
+docker compose pull
 ```
+
+```bash
 # To register a user
 docker compose exec mas mas-cli -c /data/config.yaml manage register-user
 ```
 
 ## Diagnostics
 
-```
+```bash
 # check that OIDC is working - useful for debugging TLS problems
 docker compose exec mas mas-cli -c /data/config.yaml doctor
 ````
@@ -94,9 +99,7 @@ docker compose exec mas mas-cli -c /data/config.yaml doctor
 
 ## Todo
 
- * [ ] mention this from synapse/contrib/docker*
  * [ ] pop up https://element in your browser once synapse has started up successfully for the first time, perhaps
  * [ ] test $VOLUME_PATH (or remove it)
  * [ ] swap nginx for caddy or traefik to simplify Letsencrypt
  * [ ] set up livekit TURN (tcp & udp port 443) for better firewall traversal and voip performance
-
