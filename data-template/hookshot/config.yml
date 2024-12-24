@@ -42,7 +42,7 @@ encryption:
   # (Optional) Configuration for encryption support in the bridge. If omitted, encryption support will be disabled.
   storagePath:
     # Path to the directory used to store encryption files. These files must be persist between restarts of the service.
-    # /cryptostore
+    /data/cryptostore
 
 permissions:
   # (Optional) Permissions for using the bridge. See docs/setup.md#permissions for help
