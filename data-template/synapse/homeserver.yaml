@@ -320,17 +320,17 @@ sso:
     - "https://${WEB_CLIENT_FQDN}/"
     - "https://${ADMIN_WEB_CLIENT_FQDN}/"
 
-# Disable passwork config due to external Matirx Auth Service usage
-# password_config:
-#   enabled: true
-#   pepper: "${SECRETS_SYNAPSE_PEPPER_SECRET}"
-#   policy:
-#     enabled: true
-#     minimum_length: 16
-#     require_digit: true
-#     require_symbol: true
-#     require_lowercase: true
-#     require_uppercase: true
+# Disable password config due to external Matirx Auth Service usage
+password_config:
+  enabled: true
+  pepper: "${SECRETS_SYNAPSE_PEPPER_SECRET}"
+  policy:
+    enabled: true
+    minimum_length: 16
+    require_digit: true
+    require_symbol: true
+    require_lowercase: true
+    require_uppercase: true
 
 email:
   smtp_host: ${SMTP_HOST}
@@ -384,18 +384,20 @@ app_service_config_files:
 
 # temporarily boost rate-limits to avoid breaking WIP MatrixRTC signalling
 rc_message:
-  per_second: 2
-  burst_count: 15
+  per_second: 3
+  burst_count: 20
 
 experimental_features:
-  msc3861: # OIDC
-    enabled: true
-    issuer: https://${DOMAIN}/
-    client_id: ${MAS_CLIENT_ID}
-    client_auth_method: client_secret_basic
-    client_secret: "${SECRETS_MAS_CLIENT_SECRET}"
-    admin_token: "${SECRETS_MAS_MATRIX_SECRET}"
-    account_management_url: "https://${MAS_FQDN}/account"
+  # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
+  # msc3861: # OIDC
+  #   enabled: true
+  #   issuer: https://${DOMAIN}/
+  #   client_id: ${MAS_CLIENT_ID}
+  #   client_auth_method: client_secret_basic
+  #   client_secret: "${SECRETS_MAS_CLIENT_SECRET}"
+  #   admin_token: "${SECRETS_MAS_MATRIX_SECRET}"
+  #   account_management_url: "https://${MAS_FQDN}/account"
+
   # QR login
   msc4108_enabled: true
   # MSC3266: Room summary API. Used for knocking over federation

@@ -35,15 +35,16 @@ services:
       SYNAPSE_REPORT_STATS: ${REPORT_STATS}
     entrypoint: "/entrypoint.sh"
 
-  generate-mas-secrets:
-    restart: "no"
-    image: ghcr.io/element-hq/matrix-authentication-service:latest
-    user: $USER_ID:$GROUP_ID
-    volumes:
-      - ${VOLUME_PATH}/data/mas:/data:rw
-    # FIXME: stop this regenerating a spurious default config every time
-    # We can't do the same approach as synapse (unless use a debug image of MAS) as MAS is distroless and has no bash.
-    command: "config generate -o /data/config.yaml.default"
+  # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
+  # generate-mas-secrets:
+  #   restart: "no"
+  #   image: ghcr.io/element-hq/matrix-authentication-service:latest
+  #   user: $USER_ID:$GROUP_ID
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/mas:/data:rw
+  #   # FIXME: stop this regenerating a spurious default config every time
+  #   # We can't do the same approach as synapse (unless use a debug image of MAS) as MAS is distroless and has no bash.
+  #   command: "config generate -o /data/config.yaml.default"
 
   # dependency for templating /data-template into /data (having extracted any secrets from any default generated configs)
   init:
@@ -60,8 +61,9 @@ services:
     depends_on:
       generate-synapse-secrets:
         condition: service_completed_successfully
-      generate-mas-secrets:
-        condition: service_completed_successfully
+      # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
+      # generate-mas-secrets:
+      #   condition: service_completed_successfully
 
   nginx:
     image: nginx:latest
@@ -85,7 +87,8 @@ services:
           - $HOMESERVER_FQDN
           - $WEB_CLIENT_FQDN
           - $CALL_CLIENT_FQDN
-          - $MAS_FQDN
+          # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
+          # - $MAS_FQDN
           - $ADMIN_WEB_CLIENT_FQDN
     depends_on:
       init:
@@ -390,23 +393,24 @@ services:
     depends_on:
       - synapse
 
-  mas:
-    image: ghcr.io/element-hq/matrix-authentication-service:latest
-    restart: unless-stopped
-    # ports:
-    #   - 8083:8080
-    volumes:
-      - ${VOLUME_PATH}/data/mas:/data:rw
-      - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
-    networks:
-      - backend
-    # FIXME: do we also need to sync the db?
-    command: "server --config=/data/config.yaml"
-    depends_on:
-      postgres:
-        condition: service_healthy
-      init:
-        condition: service_completed_successfully
+  # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
+  # mas:
+  #   image: ghcr.io/element-hq/matrix-authentication-service:latest
+  #   restart: unless-stopped
+  #   # ports:
+  #   #   - 8083:8080
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/mas:/data:rw
+  #     - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
+  #   networks:
+  #     - backend
+  #   # FIXME: do we also need to sync the db?
+  #   command: "server --config=/data/config.yaml"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+  #     init:
+  #       condition: service_completed_successfully
 
   element-web:
     image: vectorim/element-web:latest
