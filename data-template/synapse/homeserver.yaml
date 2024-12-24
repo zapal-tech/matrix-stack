@@ -398,8 +398,9 @@ experimental_features:
   #   admin_token: "${SECRETS_MAS_MATRIX_SECRET}"
   #   account_management_url: "https://${MAS_FQDN}/account"
 
+  # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
   # QR login
-  msc4108_enabled: true
+  # msc4108_enabled: true
   # MSC3266: Room summary API. Used for knocking over federation
   msc3266_enabled: true
   # state_after in /sync v2, needed for reliable state in busy rooms, especially Element Call
