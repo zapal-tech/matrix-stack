@@ -61,7 +61,7 @@ fi
 # Previous: if [[ ! -s /secrets/hookshot/hookshot_github_key && ! -z $HOOKSHOT_GITHUB_PRIVATE_KEY ]]
 if [[ ! -z $HOOKSHOT_GITHUB_PRIVATE_KEY ]]
 then
-	echo $HOOKSHOT_GITHUB_PRIVATE_KEY > /secrets/hookshot/hookshot_github_key && sed 's/ /\n/g' /secrets/hookshot/hookshot_github_key
+	echo "$HOOKSHOT_GITHUB_PRIVATE_KEY" > /secrets/hookshot/hookshot_github_key
 fi
 
 # TODO: compare the default generated config with our templates to see if our templates are stale
