@@ -75,7 +75,7 @@ github:
     # (Optional) Settings for allowing users to sign in via OAuth.
     client_id: ${HOOKSHOT_GITHUB_CLIENT_ID}
     client_secret: ${HOOKSHOT_GITHUB_CLIENT_SECRET}
-    redirect_uri: https://${HOMESERVER_FQDN}/hookshot/oauth/
+    redirect_uri: https://${HOMESERVER_FQDN}/oauth/
   defaultOptions:
     # (Optional) Default options for GitHub connections.
     showIssueRoomLink: false
@@ -103,14 +103,14 @@ jira:
     # (Optional) OAuth settings for connecting users to JIRA. See documentation for more information
     client_id: ${HOOKSHOT_JIRA_CLIENT_ID}
     client_secret: ${HOOKSHOT_JIRA_CLIENT_SECRET}
-    redirect_uri: https://${HOMESERVER_FQDN}/hookshot/jira/oauth
+    redirect_uri: https://${HOOKSHOT_FQDN}/jira/oauth
   userIdPrefix: jira_
 
 generic:
   # (Optional) Support for generic webhook events.
   enabled: true
   outbound: true
-  urlPrefix: https://${HOMESERVER_FQDN}/webhook/
+  urlPrefix: https://${HOOKSHOT_FQDN}/webhook/
   userIdPrefix: webhook_
   #'allowJsTransformationFunctions' will allow users to write short transformation snippets in code, and thus is unsafe in untrusted environments
   allowJsTransformationFunctions: false
@@ -127,7 +127,7 @@ generic:
 #       url: https://gitlab.com
 #   webhook:
 #     secret: secrettoken
-#     publicUrl: https://example.com/hookshot/
+#     publicUrl: https://example.com/
 #   userIdPrefix:
 #     # (Optional) Prefix used when creating ghost users for GitLab accounts.
 #     _gitlab_
@@ -137,7 +137,7 @@ generic:
 
 # figma:
 #   # (Optional) Configure this to enable Figma support
-#   publicUrl: https://example.com/hookshot/
+#   publicUrl: https://example.com/
 #   instances:
 #     your-instance:
 #       teamId: your-team-id
