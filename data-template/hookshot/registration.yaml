@@ -16,7 +16,7 @@ namespaces:
       exclusive: true
     - regex: "@jira_.*:${DOMAIN}"
       exclusive: true
-    - regex: "@webhook:${DOMAIN}" # Webhooks Service Bot
+    - regex: "@webhooks:${DOMAIN}" # Webhooks Service Bot
       exclusive: true
     - regex: "@webhook_.*:${DOMAIN}"
       exclusive: true

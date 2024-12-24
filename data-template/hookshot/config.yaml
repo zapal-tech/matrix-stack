@@ -6,7 +6,7 @@ bridge:
   url: http://synapse:8008
   mediaUrl: https://${HOMESERVER_FQDN}
   port: 9993
-  bindAddress: 0.0.0.0
+  # bindAddress: 0.0.0.0
 
 logging:
   level: info
@@ -22,16 +22,16 @@ passFile:
 listeners:
   # HTTP Listener configuration.
   - port: 9000
-    bindAddress: 0.0.0.0
+    # bindAddress: 0.0.0.0
     resources:
       - webhooks
   - port: 9001
-    bindAddress: 0.0.0.0
+    # bindAddress: 0.0.0.0
     resources:
       - metrics
       - provisioning
   - port: 9002
-    bindAddress: 0.0.0.0
+    # bindAddress: 0.0.0.0
     resources:
       - widgets
 

@@ -58,7 +58,7 @@ rtc:
   # UDP ports to use for client traffic.
   # this port range should be open for inbound traffic on the firewall
   port_range_start: 50000
-  port_range_end: 50080
+  port_range_end: 50060
   # when set, LiveKit enable WebRTC ICE over TCP when UDP isn't available
   # this port *cannot* be behind load balancer or TLS, and must be exposed on the node
   # WebRTC transports are encrypted and do not require additional encryption
