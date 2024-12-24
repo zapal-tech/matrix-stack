@@ -495,9 +495,10 @@ services:
 
   hookshot:
     image: halfshot/matrix-hookshot:latest
+    volumes:
+      - ${VOLUME_PATH}/data/hookshot:/data:rw
     networks:
       - backend
-
     secrets:
       - hookshot_passkey
       - hookshot_github_key
