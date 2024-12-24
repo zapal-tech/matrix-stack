@@ -505,3 +505,5 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+      synapse:
+        condition: service_started
