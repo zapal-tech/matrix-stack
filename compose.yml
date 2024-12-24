@@ -8,6 +8,10 @@ secrets:
     file: secrets/postgres/postgres_password
   synapse_signing_key:
     file: secrets/synapse/signing.key
+  hookshot_passkey:
+    file: secrets/hookshot/hookshot_passkey.pem
+  hookshot_github_key:
+    file: secrets/hookshot/hookshot_github_key.pem
   livekit_api_key:
     file: secrets/livekit/livekit_api_key
   livekit_secret_key:
@@ -82,6 +86,7 @@ services:
           - $WEB_CLIENT_FQDN
           - $CALL_CLIENT_FQDN
           - $MAS_FQDN
+          - $ADMIN_WEB_CLIENT_FQDN
     depends_on:
       init:
         condition: service_completed_successfully
@@ -147,6 +152,9 @@ services:
       - ${VOLUME_PATH}/data/sydent:/data:rw
     networks:
       - backend
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
   synapse:
     build:
@@ -437,14 +445,13 @@ services:
       # - 7880:7880 # HTTP listener
       # - 7881:7881 # TCP WebRTC transport, advertised via SDP
 
-      # TODO: expose livekit-turn on TCP & UDP 443 via nginx
       # At least this would allow UDP turn on port 443 for better perf.
 
       # You can't expose a massive range here as it literally sets up 10,000 userland listeners, which takes forever
       # and will clash with any existing high-numbered ports.
       # So for now, tunnel everything via TCP 7881. FIXME!
-      - 50000-50060:50000-50060/tcp # TCP media
-      - 50000-50060:50000-50060/udp # UDP media
+      - 50000-50080:50000-50080/tcp # TCP media
+      - 50000-50080:50000-50080/udp # UDP media
     networks:
       - backend
     # network_mode: host
@@ -485,3 +492,15 @@ services:
         condition: service_completed_successfully
       livekit:
         condition: service_started
+
+  hookshot:
+    image: halfshot/matrix-hookshot:latest
+    networks:
+      - backend
+
+    secrets:
+      - hookshot_passkey
+      - hookshot_github_key
+    depends_on:
+      init:
+        condition: service_completed_successfully

@@ -1,0 +1,218 @@
+# This is an example configuration file
+
+bridge:
+  # Basic homeserver configuration
+  domain: ${DOMAIN}
+  url: http://synapse:8008
+  mediaUrl: https://${HOMESERVER_FQDN}
+  port: 9993
+  bindAddress: 0.0.0.0
+
+logging:
+  level: info
+  colorize: true
+  json: false
+  timestampFormat: HH:mm:ss:SSS
+
+passFile:
+  # Passkey to encrypt tokens stored inside the bridge.
+  # Run the command "openssl genpkey -out passkey.pem -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096" to generate
+  /run/secrets/hookshot_passkey.pem
+
+listeners:
+  # HTTP Listener configuration.
+  - port: 9000
+    bindAddress: 0.0.0.0
+    resources:
+      - webhooks
+  - port: 9001
+    bindAddress: 0.0.0.0
+    resources:
+      - metrics
+      - provisioning
+  - port: 9002
+    bindAddress: 0.0.0.0
+    resources:
+      - widgets
+
+cache:
+  redisUri: redis://redis:6379
+
+encryption:
+  # (Optional) Configuration for encryption support in the bridge. If omitted, encryption support will be disabled.
+  storagePath:
+    # Path to the directory used to store encryption files. These files must be persist between restarts of the service.
+    # /cryptostore
+
+permissions:
+  # (Optional) Permissions for using the bridge. See docs/setup.md#permissions for help
+  - actor: "*"
+    services:
+      - service: "*"
+        level: commands
+  # - actor: ${DOMAIN}
+  #   services:
+  #     - service: "*"
+  #       level: admin
+  - actor: "@${ADMIN1_USERNAME}:${DOMAIN}"
+    services:
+      - service: "*"
+        level: admin
+  - actor: "@${ADMIN2_USERNAME}:${DOMAIN}"
+    services:
+      - service: "*"
+        level: admin
+
+github:
+  # (Optional) Configure this to enable GitHub support
+  auth:
+    id: ${HOOKSHOT_GITHUB_APP_ID}
+    privateKeyFile: /run/secrets/hookshot_github_key.pem
+  webhook:
+    # Webhook settings for the GitHub app.
+    secret: ${HOOKSHOT_GITHUB_WEBHOOK_SECRET}
+  oauth:
+    # (Optional) Settings for allowing users to sign in via OAuth.
+    client_id: ${HOOKSHOT_GITHUB_CLIENT_ID}
+    client_secret: ${HOOKSHOT_GITHUB_CLIENT_SECRET}
+    redirect_uri: https://${HOMESERVER_FQDN}/hookshot/oauth/
+  defaultOptions:
+    # (Optional) Default options for GitHub connections.
+    showIssueRoomLink: false
+    hotlinkIssues:
+      prefix: "#"
+    enableHooks:
+      - issue.created
+      - pull_request.closed
+      - pull_request.merged
+      - pull_request.ready_for_review
+      - pull_request.reviewed
+      - release.created
+      - workflow.run.success
+      - workflow.run.failure
+      - workflow.run.action_required
+  userIdPrefix:
+    # (Optional) Prefix used when creating ghost users for GitHub accounts.
+    github_
+
+jira:
+  # (Optional) Configure this to enable Jira support. Only specify `url` if you are using a On Premise install (i.e. not atlassian.com)
+  webhook:
+    secret: ${HOOKSHOT_JIRA_WEBHOOK_SECRET}
+  oauth:
+    # (Optional) OAuth settings for connecting users to JIRA. See documentation for more information
+    client_id: ${HOOKSHOT_JIRA_CLIENT_ID}
+    client_secret: ${HOOKSHOT_JIRA_CLIENT_SECRET}
+    redirect_uri: https://${HOMESERVER_FQDN}/hookshot/jira/oauth
+  userIdPrefix: jira_
+
+generic:
+  # (Optional) Support for generic webhook events.
+  enabled: true
+  outbound: true
+  urlPrefix: https://${HOMESERVER_FQDN}/webhook/
+  userIdPrefix: webhook_
+  #'allowJsTransformationFunctions' will allow users to write short transformation snippets in code, and thus is unsafe in untrusted environments
+  allowJsTransformationFunctions: false
+  waitForComplete: true
+  enableHttpGet: true
+  sendExpiryNotice: true
+  requireExpiryTime: false
+  maxExpiryTime: 30d
+
+# gitlab:
+#   # (Optional) Configure this to enable GitLab support
+#   instances:
+#     gitlab.com:
+#       url: https://gitlab.com
+#   webhook:
+#     secret: secrettoken
+#     publicUrl: https://example.com/hookshot/
+#   userIdPrefix:
+#     # (Optional) Prefix used when creating ghost users for GitLab accounts.
+#     _gitlab_
+#   commentDebounceMs:
+#     # (Optional) Aggregate comments by waiting this many milliseconds before posting them to Matrix. Defaults to 5000 (5 seconds)
+#     5000
+
+# figma:
+#   # (Optional) Configure this to enable Figma support
+#   publicUrl: https://example.com/hookshot/
+#   instances:
+#     your-instance:
+#       teamId: your-team-id
+#       accessToken: your-personal-access-token
+#       passcode: your-webhook-passcode
+
+feeds:
+  enabled: true
+  pollConcurrency: 20
+  pollIntervalSeconds: 120
+  pollTimeoutSeconds: 30
+
+bot:
+  displayname: ${BRAND} Hookshot Bot
+  # avatar: mxc://${DOMAIN}/${HOOKSHOT_BOT_AVATAR_MEDIA_ID}
+
+serviceBots:
+  - localpart: webhook
+    displayname: Webhooks Bot
+    # avatar: "/data/assets/webhook-avatar.jpg"
+    prefix: "!webhook"
+    service: generic
+  - localpart: feeds
+    displayname: Feeds Bot
+    avatar: "/data/assets/feeds-avatar.jpg"
+    prefix: "!feeds"
+    service: feeds
+  - localpart: github
+    displayname: GitHub Bot
+    avatar: "/data/assets/github-avatar.jpg"
+    prefix: "!github"
+    service: github
+  - localpart: jira
+    displayname: Jira Bot
+    avatar: "/data/assets/jira-avatar.jpg"
+    prefix: "!jira"
+    service: jira
+
+widgets:
+  # (Optional) EXPERIMENTAL support for complimentary widgets
+  addToAdminRooms: false
+  publicUrl: https://${HOMESERVER_FQDN}/widgetapi/v1/static/
+  roomSetupWidget:
+    addOnInvite: true
+  disallowedIpRanges:
+    - 127.0.0.0/8
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
+    - 100.64.0.0/10
+    - 192.0.0.0/24
+    - 169.254.0.0/16
+    - 192.88.99.0/24
+    - 198.18.0.0/15
+    - 192.0.2.0/24
+    - 198.51.100.0/24
+    - 203.0.113.0/24
+    - 224.0.0.0/4
+    - ::1/128
+    - fe80::/10
+    - fc00::/7
+    - 2001:db8::/32
+    - ff00::/8
+    - fec0::/10
+  branding:
+    widgetTitle: ${BRAND} Hookshot Configuration
+
+provisioning:
+  # (Optional) Provisioning API for integration managers
+  secret: ${HOOKSHOT_PROVISIONING_SECRET}
+
+#metrics:
+#  # (Optional) Prometheus metrics support
+#  enabled: true
+
+sentry:
+  dsn: ${HOOKSHOT_SENTRY_DSN}
+  environment: production

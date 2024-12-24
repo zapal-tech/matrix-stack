@@ -168,7 +168,7 @@ media_storage_providers:
       secret_access_key: ${S3_STORAGE_PROVIDER_SECRET_ACCESS_KEY}
       prefix: ${S3_STORAGE_PROVIDER_LOCAL_MEDIA_PREFIX}
 
-max_upload_size: 100M
+max_upload_size: ${MAX_UPLOAD_SIZE}
 
 dynamic_thumbnails: true
 
@@ -193,7 +193,6 @@ thumbnail_sizes:
 #   local_media_lifetime: 40d
 #   remote_media_lifetime: 14d
 
-# signing_key_path: "/data/homeserver.signing.key"
 signing_key_path: "/run/secrets/synapse_signing_key"
 
 trusted_key_servers:
@@ -238,7 +237,7 @@ url_preview_url_blacklist:
 
   # blacklist all *.google.com URLs
   - netloc: 'google.com'
-  # - netloc: '*.google.com'
+  - netloc: 'www.google.com'
 
   # blacklist all plain HTTP URLs
   - scheme: 'http'
@@ -376,11 +375,8 @@ server_notices:
 
 report_stats: false
 
-# app_service_config_files:
-#   - /opt/hookshot/registration.yml
-
-
-
+app_service_config_files:
+  - /data/hookshot/registration.yaml
 
 # as we want our first launch and subsequent upgrades to go as fast as possible don't sleep between background updates
 # background_updates:
@@ -409,9 +405,12 @@ experimental_features:
   # disable_badge_count to get accurate app badge counts in Element X
   msc4076_enabled: true
 
+  # MSCs for Matrix Hookshot
+  msc3202_device_masquerading: true
+  msc3202_transaction_extensions: true
+  msc2409_to_device_messages_enabled: true
+
 # The maximum allowed duration by which sent events can be delayed, as per MSC4140.
 # Must be a positive value if set. Defaults to no duration (null), which disallows sending delayed events.
 # Needed for MatrixRTC to avoid stuck calls
 max_event_delay_duration: 24h
-
-# vim:ft=yaml

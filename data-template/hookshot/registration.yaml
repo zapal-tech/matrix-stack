@@ -1,0 +1,36 @@
+id: matrix-hookshot
+as_token: ${HOOKSHOT_AS_TOKEN}
+hs_token: ${HOOKSHOT_HS_TOKEN}
+namespaces:
+  rooms: []
+  users:
+    - regex: "@github:${DOMAIN}" # GitHub Service Bot
+      exclusive: true
+    - regex: "@github_.*:${DOMAIN}"
+      exclusive: true
+    # - regex: "@gitlab:${DOMAIN}" # GitLab Service Bot
+    #   exclusive: true
+    # - regex: "@gitlab_.*:${DOMAIN}"
+    #   exclusive: true
+    - regex: "@jira:${DOMAIN}" # Jira Service Bot
+      exclusive: true
+    - regex: "@jira_.*:${DOMAIN}"
+      exclusive: true
+    - regex: "@webhook:${DOMAIN}" # Webhooks Service Bot
+      exclusive: true
+    - regex: "@webhook_.*:${DOMAIN}"
+      exclusive: true
+    - regex: "@feeds:${DOMAIN}" # Feeds Service Bot
+      exclusive: true
+  aliases:
+    - regex: "#github_.+:${DOMAIN}"
+      exclusive: true
+
+sender_localpart: hookshot
+url: "http://hookshot:9993" # This should match the bridge.port in your config file
+rate_limited: false
+
+# If enabling encryption
+de.sorunome.msc2409.push_ephemeral: true
+push_ephemeral: true
+org.matrix.msc3202: true
