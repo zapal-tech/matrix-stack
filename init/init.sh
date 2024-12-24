@@ -59,7 +59,7 @@ then
 fi
 if [[ ! -s /secrets/hookshot/hookshot_github_key && ! -z $HOOKSHOT_GITHUB_PRIVATE_KEY ]]
 then
-	echo $HOOKSHOT_GITHUB_PRIVATE_KEY /secrets/hookshot/hookshot_github_key -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096
+	echo $HOOKSHOT_GITHUB_PRIVATE_KEY > /secrets/hookshot/hookshot_github_key
 fi
 
 # TODO: compare the default generated config with our templates to see if our templates are stale
