@@ -9,9 +9,9 @@ secrets:
   synapse_signing_key:
     file: secrets/synapse/signing.key
   hookshot_passkey:
-    file: secrets/hookshot/hookshot_passkey.pem
+    file: secrets/hookshot/hookshot_passkey
   hookshot_github_key:
-    file: secrets/hookshot/hookshot_github_key.pem
+    file: secrets/hookshot/hookshot_github_key
   livekit_api_key:
     file: secrets/livekit/livekit_api_key
   livekit_secret_key:

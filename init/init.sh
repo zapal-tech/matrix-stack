@@ -53,13 +53,13 @@ then
 fi
 
 mkdir -p /secrets/hookshot
-if [[ ! -s /secrets/hookshot/hookshot_passkey.pem ]]
+if [[ ! -s /secrets/hookshot/hookshot_passkey ]]
 then
-	openssl genpkey -out /secrets/hookshot/hookshot_passkey.pem -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096
+	openssl genpkey -out /secrets/hookshot/hookshot_passkey -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096
 fi
-if [[ ! -s /secrets/hookshot/hookshot_github_key.pem && ! -z $HOOKSHOT_GITHUB_PRIVATE_KEY ]]
+if [[ ! -s /secrets/hookshot/hookshot_github_key && ! -z $HOOKSHOT_GITHUB_PRIVATE_KEY ]]
 then
-	echo $HOOKSHOT_GITHUB_PRIVATE_KEY /secrets/hookshot/hookshot_github_key.pem -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096
+	echo $HOOKSHOT_GITHUB_PRIVATE_KEY /secrets/hookshot/hookshot_github_key -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096
 fi
 
 # TODO: compare the default generated config with our templates to see if our templates are stale

@@ -17,7 +17,7 @@ logging:
 passFile:
   # Passkey to encrypt tokens stored inside the bridge.
   # Run the command "openssl genpkey -out passkey.pem -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096" to generate
-  /run/secrets/hookshot_passkey.pem
+  /run/secrets/hookshot_passkey
 
 listeners:
   # HTTP Listener configuration.
@@ -67,7 +67,7 @@ github:
   # (Optional) Configure this to enable GitHub support
   auth:
     id: ${HOOKSHOT_GITHUB_APP_ID}
-    privateKeyFile: /run/secrets/hookshot_github_key.pem
+    privateKeyFile: /run/secrets/hookshot_github_key
   webhook:
     # Webhook settings for the GitHub app.
     secret: ${HOOKSHOT_GITHUB_WEBHOOK_SECRET}
