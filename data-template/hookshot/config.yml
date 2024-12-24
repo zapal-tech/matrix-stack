@@ -155,7 +155,7 @@ bot:
   # avatar: mxc://${DOMAIN}/${HOOKSHOT_BOT_AVATAR_MEDIA_ID}
 
 serviceBots:
-  - localpart: webhook
+  - localpart: webhooks
     displayname: Webhooks Bot
     # avatar: "/data/assets/webhook-avatar.jpg"
     prefix: "!webhook"
