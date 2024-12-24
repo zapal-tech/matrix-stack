@@ -376,7 +376,7 @@ server_notices:
 report_stats: false
 
 app_service_config_files:
-  - /data/hookshot-registration.yaml
+  - /data/hookshot-registration.yml
 
 # as we want our first launch and subsequent upgrades to go as fast as possible don't sleep between background updates
 # background_updates:
