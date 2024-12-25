@@ -3,7 +3,7 @@
 bridge:
   # Basic homeserver configuration
   domain: ${DOMAIN}
-  url: http://synapse:8008
+  url: http://synapse-stream-writer:8035 # Set to generic stream-writer worker to properly send events
   mediaUrl: https://${HOMESERVER_FQDN}
   port: 9993
   bindAddress: 0.0.0.0
