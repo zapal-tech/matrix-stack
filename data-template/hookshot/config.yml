@@ -179,7 +179,7 @@ serviceBots:
 widgets:
   # (Optional) EXPERIMENTAL support for complimentary widgets
   addToAdminRooms: false
-  publicUrl: https://${HOMESERVER_FQDN}/hookshot/widgetapi/
+  publicUrl: https://${HOMESERVER_FQDN}/hookshot/widgetapi/v1/static/
   roomSetupWidget:
     addOnInvite: true
   disallowedIpRanges:
