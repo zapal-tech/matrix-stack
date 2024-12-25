@@ -82,7 +82,8 @@ instance_map:
 stream_writers:
   events: stream-writer
   typing: stream-writer
-  to_device: main # Fix for hookshot
+  # Fix for hookshot
+  # to_device: stream-writer
   account_data: stream-writer
   receipts: stream-writer
   presence: stream-writer
