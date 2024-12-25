@@ -73,7 +73,7 @@ services:
       - "443:443"
       - "8448:8448"
     # shutdown fast so we can iterate rapidly on compose.yml
-    stop_grace_period: 0s
+    stop_grace_period: 5s
     volumes:
       - ${VOLUME_PATH}/data/nginx/conf.d:/etc/nginx/conf.d
       - ${VOLUME_PATH}/data/nginx/www:/var/www

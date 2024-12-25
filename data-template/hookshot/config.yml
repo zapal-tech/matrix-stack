@@ -6,7 +6,7 @@ bridge:
   url: http://synapse:8008
   mediaUrl: https://${HOMESERVER_FQDN}
   port: 9993
-  bindAddress: 0.0.0.0
+  # bindAddress: 0.0.0.0
 
 logging:
   level: info
@@ -22,16 +22,16 @@ passFile:
 listeners:
   # HTTP Listener configuration.
   - port: 9000
-    bindAddress: 0.0.0.0
+    # bindAddress: 0.0.0.0
     resources:
       - webhooks
   - port: 9001
-    bindAddress: 0.0.0.0
+    # bindAddress: 0.0.0.0
     resources:
       - metrics
       - provisioning
   - port: 9002
-    bindAddress: 0.0.0.0
+    # bindAddress: 0.0.0.0
     resources:
       - widgets
 
@@ -183,9 +183,9 @@ widgets:
   roomSetupWidget:
     addOnInvite: true
   disallowedIpRanges:
-    - 127.0.0.0/8
-    - 10.0.0.0/8
-    - 172.16.0.0/12
+    # - 127.0.0.0/8
+    # - 10.0.0.0/8
+    # - 172.16.0.0/12
     - 192.168.0.0/16
     - 100.64.0.0/10
     - 192.0.0.0/24
@@ -197,11 +197,11 @@ widgets:
     - 203.0.113.0/24
     - 224.0.0.0/4
     - ::1/128
-    - fe80::/10
-    - fc00::/7
-    - 2001:db8::/32
-    - ff00::/8
-    - fec0::/10
+    # - fe80::/10
+    # - fc00::/7
+    # - 2001:db8::/32
+    # - ff00::/8
+    # - fec0::/10
   branding:
     widgetTitle: ${BRAND} Hookshot Configuration
 

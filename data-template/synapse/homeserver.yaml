@@ -28,9 +28,9 @@ public_baseurl: https://${HOMESERVER_FQDN}/
 suppress_key_server_warning: true
 
 ip_range_blacklist:
-#   - '127.0.0.0/8' # Prevents Matrix Hookshot from sending requests to Synapse
-#  - '10.0.0.0/8'
-#  - '172.16.0.0/12'
+  # - '127.0.0.0/8' # Prevents Matrix Hookshot from sending requests to Synapse
+  # - '10.0.0.0/8'
+  # - '172.16.0.0/12'
   - '192.168.0.0/16'
   - '100.64.0.0/10'
   - '192.0.0.0/24'
@@ -42,11 +42,11 @@ ip_range_blacklist:
   - '203.0.113.0/24'
   - '224.0.0.0/4'
   - '::1/128'
-#  - 'fe80::/10'
-#  - 'fc00::/7'
-#  - '2001:db8::/32'
-#  - 'ff00::/8'
-#  - 'fec0::/10'
+  # - 'fe80::/10'
+  # - 'fc00::/7'
+  # - '2001:db8::/32'
+  # - 'ff00::/8'
+  # - 'fec0::/10'
 
 # Worker secret for authenticated connection
 worker_replication_secret: "${SECRETS_SYNAPSE_WORKER_REPLICATION_SECRET}"
