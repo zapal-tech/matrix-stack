@@ -22,17 +22,23 @@ passFile:
 listeners:
   # HTTP Listener configuration.
   - port: 9000
-    bindAddress: 0.0.0.0
+    bindAddress:
+      - 0.0.0.0
+      - hookshot
     x_forwarded: true
     resources:
       - webhooks
   - port: 9001
-    bindAddress: 0.0.0.0
+    bindAddress:
+      - 0.0.0.0
+      - hookshot
     resources:
       - metrics
       - provisioning
   - port: 9002
-    bindAddress: 0.0.0.0
+    bindAddress:
+      - 0.0.0.0
+      - hookshot
     x_forwarded: true
     resources:
       - widgets
