@@ -85,6 +85,7 @@ services:
         aliases: # so our containers can resolve the LB
           - $DOMAIN
           - $HOMESERVER_FQDN
+          - $HOOKSHOT_FQDN
           - $WEB_CLIENT_FQDN
           - $CALL_CLIENT_FQDN
           # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
