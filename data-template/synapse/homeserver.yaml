@@ -10,7 +10,7 @@ listeners:
     type: http
     x_forwarded: true
     resources:
-      - names: [client, federation]
+      - names: [client, federation, media] # Media for Hookshot avatars
         compress: false
   - port: 9093
     tls: false
