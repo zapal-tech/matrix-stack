@@ -157,22 +157,22 @@ bot:
 serviceBots:
   - localpart: webhooks
     displayname: Webhooks Bot
-    # avatar: "/data/assets/webhook-avatar.jpg"
-    prefix: "!webhook"
+    avatar: "./assets/webhook-avatar.jpg"
+    prefix: "!webhooks"
     service: generic
   - localpart: feeds
     displayname: Feeds Bot
-    # avatar: "/data/assets/feeds-avatar.jpg"
+    avatar: "./assets/feeds-avatar.jpg"
     prefix: "!feeds"
     service: feeds
   - localpart: github
     displayname: GitHub Bot
-    # avatar: "/data/assets/github-avatar.jpg"
+    avatar: "./assets/github-avatar.jpg"
     prefix: "!github"
     service: github
   - localpart: jira
     displayname: Jira Bot
-    # avatar: "/data/assets/jira-avatar.jpg"
+    avatar: "./assets/jira-avatar.jpg"
     prefix: "!jira"
     service: jira
 
