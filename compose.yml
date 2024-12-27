@@ -96,7 +96,6 @@ services:
           - $CALL_CLIENT_FQDN
           # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
           # - $MAS_FQDN
-          - $ADMIN_WEB_CLIENT_FQDN
     depends_on:
       init:
         condition: service_completed_successfully
@@ -174,6 +173,7 @@ services:
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
       - ${VOLUME_PATH}/data/hookshot/registration.yml:/data/hookshot-registration.yml:ro
+      - ${VOLUME_PATH}/data/mautrix-telegram/registration.yaml:/data/mautrix-telegram-registration.yaml:ro
       - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     # ports:
     #   - 8008:8008
@@ -527,3 +527,11 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+
+  # mautrix-telegram:
+  #   image: dock.mau.dev/mautrix/telegram:0.15.2
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/mautrix-telegram:/data
+  #   networks:
+  #     - backend
