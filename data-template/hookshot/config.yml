@@ -205,9 +205,9 @@ widgets:
   branding:
     widgetTitle: ${BRAND} Hookshot Configuration
 
-provisioning:
-  # (Optional) Provisioning API for integration managers
-  secret: ${HOOKSHOT_PROVISIONING_SECRET}
+# provisioning:
+#   # (Optional) Provisioning API for integration managers
+#   secret: ${HOOKSHOT_PROVISIONING_SECRET}
 
 #metrics:
 #  # (Optional) Prometheus metrics support
