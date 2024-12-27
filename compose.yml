@@ -3,11 +3,11 @@
 networks:
   backend:
     driver: bridge
-      ipam:
-        driver: default
-        config:
-          - subnet: 172.25.0.0/16
-            gateway: 172.25.0.1
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
 
 secrets:
   postgres_password:
