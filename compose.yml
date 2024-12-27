@@ -522,6 +522,7 @@ services:
     secrets:
       - hookshot_passkey
       - hookshot_github_key
+    restart: unless-stopped
     depends_on:
       init:
         condition: service_completed_successfully
