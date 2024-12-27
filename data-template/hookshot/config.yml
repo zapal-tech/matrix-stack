@@ -3,7 +3,7 @@
 bridge:
   # Basic homeserver configuration
   domain: ${DOMAIN}
-  url: http://${HOMESERVER_FQDN}
+  url: https://${HOMESERVER_FQDN}
   mediaUrl: https://${HOMESERVER_FQDN}
   port: 9993
   bindAddress: 0.0.0.0
