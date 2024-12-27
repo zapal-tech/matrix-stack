@@ -3,7 +3,7 @@
 bridge:
   # Basic homeserver configuration
   domain: ${DOMAIN}
-  url: http://synapse:8008
+  url: http://${SYNAPSE_IP}:8008
   mediaUrl: https://${HOMESERVER_FQDN}
   port: 9993
   bindAddress: 0.0.0.0

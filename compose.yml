@@ -178,7 +178,8 @@ services:
     # ports:
     #   - 8008:8008
     networks:
-      - backend
+      backend:
+        ipv4_address: ${SYNAPSE_IP}
     environment:
       SYNAPSE_CONFIG_DIR: /data
       SYNAPSE_CONFIG_PATH: /data/homeserver.yaml
