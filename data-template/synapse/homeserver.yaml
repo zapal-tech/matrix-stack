@@ -10,7 +10,7 @@ listeners:
     type: http
     x_forwarded: true
     resources:
-      - names: [client, federation, media] # Media for Hookshot avatars
+      - names: [client, federation, media]
         compress: false
   - port: 9093
     tls: false
@@ -105,7 +105,7 @@ outbound_federation_restricted_to:
   - federation-sender-and-pusher-2
 
 run_background_tasks_on: background-worker-1
-media_instance_running_background_jobs: media-worker-1
+media_instance_running_background_jobs: media-repository-1
 notify_appservices_from_worker: app-service
 
 # Database
