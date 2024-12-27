@@ -152,7 +152,7 @@ feeds:
 
 bot:
   displayname: ${BRAND} Hookshot Bot
-  # avatar: /data/assets/hookshot.jpg
+  avatar: /data/assets/hookshot.jpg
 
 serviceBots:
   - localpart: webhooks
@@ -162,17 +162,17 @@ serviceBots:
     service: generic
   - localpart: feeds
     displayname: Feeds Bot
-    # avatar: /data/assets/feeds.jpg
+    avatar: /data/assets/feeds.jpg
     prefix: "!feeds"
     service: feeds
   - localpart: github
     displayname: GitHub Bot
-    # avatar: /data/assets/github.jpg
+    avatar: /data/assets/github.jpg
     prefix: "!github"
     service: github
   - localpart: jira
     displayname: Jira Bot
-    # avatar: /data/assets/jira.jpg
+    avatar: /data/assets/jira.jpg
     prefix: "!jira"
     service: jira
 

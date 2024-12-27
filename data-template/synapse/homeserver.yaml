@@ -66,9 +66,9 @@ instance_map:
     host: synapse-federation-sender-and-pusher-2
     port: 8034
   # Fix Hookshot send to device messages
-  # stream-writer:
-  #   host: synapse-stream-writer
-  #   port: 8034
+  stream-writer:
+    host: synapse-stream-writer
+    port: 8034
   app-service:
     host: synapse-app-service
     port: 8034
@@ -79,16 +79,15 @@ instance_map:
     host: synapse-media-repository-1
     port: 8034
 
-# Fix Hookshot send to device messages
 # Stream Workers
-# stream_writers:
-#   events: stream-writer
-#   typing: stream-writer
-#   to_device: stream-writer
-#   account_data: stream-writer
-#   receipts: stream-writer
-#   presence: stream-writer
-#   push_rules: stream-writer
+stream_writers:
+  events: stream-writer
+  typing: stream-writer
+  to_device: stream-writer
+  account_data: stream-writer
+  receipts: stream-writer
+  presence: stream-writer
+  push_rules: stream-writer
 
 # Pusher workers
 pusher_instances:
