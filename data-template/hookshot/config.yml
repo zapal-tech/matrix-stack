@@ -75,7 +75,7 @@ github:
     # (Optional) Settings for allowing users to sign in via OAuth.
     client_id: ${HOOKSHOT_GITHUB_CLIENT_ID}
     client_secret: ${HOOKSHOT_GITHUB_CLIENT_SECRET}
-    redirect_uri: https://${HOOKSHOT_FQDN}/github/oauth
+    redirect_uri: https://${HOOKSHOT_FQDN}/oauth
   defaultOptions:
     # (Optional) Default options for GitHub connections.
     showIssueRoomLink: false
