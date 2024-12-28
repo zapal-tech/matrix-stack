@@ -1,7 +1,12 @@
 {
   "cSpell.words": [
+    "appservice",
     "certbot",
+    "certonly",
     "displayname",
+    "envsubst",
+    "EOSQL",
+    "fullchain",
     "genpkey",
     "halfshot",
     "healthcheck",
@@ -14,7 +19,13 @@
     "localport",
     "matrixdotorg",
     "mautrix",
+    "mxid",
+    "privkey",
+    "psql",
+    "puppeting",
     "sydent",
-    "vectorim"
+    "urandom",
+    "vectorim",
+    "webp"
   ]
 }

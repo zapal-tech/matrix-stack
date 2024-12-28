@@ -1,0 +1,21 @@
+id: mautrix-telegram
+as_token: ${MAUTRIX_TELEGRAM_AS_TOKEN}
+hs_token: ${MAUTRIX_TELEGRAM_HS_TOKEN}
+namespaces:
+  rooms: []
+  users:
+    - regex: "@telegram:${DOMAIN}" # Telegram Service Bot
+      exclusive: true
+    - regex: "@telegram_.*:${DOMAIN}"
+  aliases:
+    - regex: "#telegram_.+:${DOMAIN}"
+      exclusive: true
+
+sender_localpart: telegram
+url: "http://mautrix-telegram:29317" # This should match the appservice.address in your config file (and the real address/alias of the appservice)
+rate_limited: false
+
+# If enabling encryption
+de.sorunome.msc2409.push_ephemeral: true
+push_ephemeral: true
+org.matrix.msc3202: true

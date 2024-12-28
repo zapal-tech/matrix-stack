@@ -123,7 +123,7 @@ services:
     networks:
       - backend
     environment:
-      POSTGRES_MULTIPLE_DATABASES: synapse,mas
+      POSTGRES_MULTIPLE_DATABASES: synapse,mas,mautrix_telegram
       POSTGRES_USER: matrix
       POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
       POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C
@@ -515,6 +515,7 @@ services:
 
   hookshot:
     image: halfshot/matrix-hookshot:latest
+    restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/hookshot:/data:rw
     networks:
@@ -523,15 +524,14 @@ services:
     secrets:
       - hookshot_passkey
       - hookshot_github_key
-    restart: unless-stopped
     depends_on:
       init:
         condition: service_completed_successfully
 
-  # mautrix-telegram:
-  #   image: dock.mau.dev/mautrix/telegram:0.15.2
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ${VOLUME_PATH}/data/mautrix-telegram:/data
-  #   networks:
-  #     - backend
+  mautrix-telegram:
+    image: dock.mau.dev/mautrix/telegram:0.15.2
+    restart: unless-stopped
+    volumes:
+      - ${VOLUME_PATH}/data/mautrix-telegram:/data
+    networks:
+      - backend

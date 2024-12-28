@@ -14,7 +14,7 @@ then
 	# extract synapse secrets from the config and move them into ./secrets
 	echo "Extracting generated synapse secrets..."
 	mkdir -p /secrets/synapse
-	for secret in registration_shared_secret macaroon_secret_key form_secret pepper_secret worker_replication_secret
+	for secret in registration_shared_secret macaroon_secret_key form_secret pepper_secret worker_replication_secret shared_secret_authenticator_shared_secret
 	do
 		yq .$secret /data/synapse/homeserver.yaml.default > /secrets/synapse/$secret
 	done
@@ -88,6 +88,7 @@ export DOLLAR='$' # evil hack to escape dollars in config files
 	export SECRETS_SYNAPSE_FORM_SECRET=$(</secrets/synapse/form_secret)
 	export SECRETS_SYNAPSE_PEPPER_SECRET=$(</secrets/synapse/pepper_secret)
 	export SECRETS_SYNAPSE_WORKER_REPLICATION_SECRET=$(</secrets/synapse/worker_replication_secret)
+	export SECRETS_SYNAPSE_SHARED_SECRET_AUTHENTICATOR_SHARED_SECRET=$(</secrets/synapse/shared_secret_authenticator_shared_secret)
 	export SECRETS_MAS_MATRIX_SECRET=$(</secrets/mas/matrix.secret)
 	export SECRETS_MAS_CLIENT_SECRET=$(</secrets/mas/client.secret)
 	export SECRETS_POSTGRES_PASSWORD=$(</secrets/postgres/postgres_password)
@@ -106,6 +107,12 @@ export DOLLAR='$' # evil hack to escape dollars in config files
 	export SECRETS_LIVEKIT_API_KEY=$(</secrets/livekit/livekit_api_key)
 	export SECRETS_LIVEKIT_SECRET_KEY=$(</secrets/livekit/livekit_secret_key)
 	template "/data-template/livekit"
+)
+
+(
+	export SECRETS_POSTGRES_PASSWORD=$(</secrets/postgres/postgres_password)
+	export SECRETS_SYNAPSE_SHARED_SECRET_AUTHENTICATOR_SHARED_SECRET=$(</secrets/synapse/shared_secret_authenticator_shared_secret)
+	template "/data-template/mautrix-telegram"
 )
 
 template "/data-template/hookshot"

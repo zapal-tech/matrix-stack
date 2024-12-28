@@ -169,7 +169,7 @@ media_storage_providers:
       secret_access_key: ${S3_STORAGE_PROVIDER_SECRET_ACCESS_KEY}
       prefix: ${S3_STORAGE_PROVIDER_LOCAL_MEDIA_PREFIX}
 
-max_upload_size: ${MAX_UPLOAD_SIZE}
+max_upload_size: ${MAX_UPLOAD_SIZE_MB}M
 
 dynamic_thumbnails: true
 
@@ -193,6 +193,24 @@ thumbnail_sizes:
 # media_retention:
 #   local_media_lifetime: 40d
 #   remote_media_lifetime: 14d
+
+modules:
+  - module: shared_secret_authenticator.SharedSecretAuthProvider
+    config:
+      shared_secret: ${SECRETS_SYNAPSE_SHARED_SECRET_AUTHENTICATOR_SHARED_SECRET}
+      # By default, only login requests of type `com.devture.shared_secret_auth` are supported.
+      # Below, we explicitly enable support for the old `m.login.password` login type,
+      # which was used in v1 of matrix-synapse-shared-secret-auth and still widely supported by external software.
+      # If you don't need such legacy support, consider setting this to `false` or omitting it entirely.
+      m_login_password_support_enabled: false
+
+      # By default, only login requests of type `com.devture.shared_secret_auth` are supported.
+      #
+      # Uncomment the line below to disable `com.devture.shared_secret_auth` support.
+      # You will then need to:
+      # - have `m_login_password_support_enabled: true` to enable the `m.login.password` login type
+      # - authenticate using `m.login.password` requests, instead of ``com.devture.shared_secret_auth` requests
+      # com_devture_shared_secret_auth_support_enabled: false
 
 signing_key_path: "/run/secrets/synapse_signing_key"
 
@@ -357,7 +375,7 @@ report_stats: false
 
 app_service_config_files:
   - /data/hookshot-registration.yml
-  # - /data/mautrix-telegram-registration.yml
+  - /data/mautrix-telegram-registration.yml
 
 # as we want our first launch and subsequent upgrades to go as fast as possible don't sleep between background updates
 # background_updates:
