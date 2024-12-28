@@ -535,3 +535,6 @@ services:
       - ${VOLUME_PATH}/data/mautrix-telegram:/data
     networks:
       - backend
+    depends_on:
+      init:
+        condition: service_completed_successfully
