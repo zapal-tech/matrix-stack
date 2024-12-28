@@ -529,7 +529,7 @@ services:
         condition: service_completed_successfully
 
   mautrix-telegram:
-    image: dock.mau.dev/mautrix/telegram:0.15.2
+    image: dock.mau.dev/mautrix/telegram:v0.15.2
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/mautrix-telegram:/data
