@@ -173,7 +173,7 @@ services:
     volumes:
       - ${VOLUME_PATH}/data/synapse:/data:rw
       - ${VOLUME_PATH}/data/hookshot/registration.yml:/data/hookshot-registration.yml:ro
-      # - ${VOLUME_PATH}/data/mautrix-telegram/registration.yaml:/data/mautrix-telegram-registration.yaml:ro
+      - ${VOLUME_PATH}/data/mautrix-telegram/registration.yaml:/data/mautrix-telegram-registration.yaml:ro
       - ${VOLUME_PATH}/data/ssl/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt
     # ports:
     #   - 8008:8008
