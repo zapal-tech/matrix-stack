@@ -413,12 +413,17 @@ services:
     restart: unless-stopped
     volumes:
       - ${VOLUME_PATH}/data/synapse-admin/config.json:/app/config.json:ro
+    networks:
+      - backend
     # healthcheck:
     #   test: ["CMD", "curl", "-f", "http://localhost"]
     #   interval: 30s
     #   timeout: 10s
     #   retries: 10
     #   start_period: 20s
+    depends_on:
+      init:
+        condition: service_completed_successfully
 
   # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
   # mas:
