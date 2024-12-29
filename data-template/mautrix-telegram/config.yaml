@@ -138,7 +138,7 @@ bridge:
   # synced when they send messages. The maximum is 10000, after which the Telegram server
   # will not send any more members.
   # -1 means no limit (which means it's limited to 10000 by the server)
-  max_initial_member_sync: 100
+  max_initial_member_sync: 10
   # Maximum number of participants in chats to bridge. Only applies when the portal is being created.
   # If there are more members when trying to create a room, the room creation will be cancelled.
   # -1 means no limit (which means all chats can be bridged)
@@ -157,7 +157,7 @@ bridge:
   sync_update_limit: 0
   # Number of most recently active dialogs to create portals for when syncing chats.
   # Set to 0 to remove limit.
-  sync_create_limit: 15
+  sync_create_limit: 1
   # Should all chats be scheduled to be created later?
   # This is best used in combination with MSC2716 infinite backfill.
   sync_deferred_create_all: false
@@ -165,13 +165,13 @@ bridge:
   sync_direct_chats: false
   # The maximum number of simultaneous Telegram deletions to handle.
   # A large number of simultaneous redactions could put strain on your homeserver.
-  max_telegram_delete: 10
+  max_telegram_delete: 30
   # Whether or not to automatically sync the Matrix room state (mostly unpuppeted displaynames)
   # at startup and when creating a bridge.
   sync_matrix_state: true
   # Allow logging in within Matrix. If false, users can only log in using login-qr or the
   # out-of-Matrix login website (see appservice.public config section)
-  allow_matrix_login: true
+  allow_matrix_login: false
   # Whether or not to make portals of publicly joinable channels/supergroups publicly joinable on Matrix.
   public_portals: false
   # Whether or not to use /sync to get presence, read receipts and typing notifications
@@ -480,14 +480,14 @@ bridge:
     # Filter mode to use. Either "blacklist" or "whitelist".
     # If the mode is "blacklist", the listed chats will never be bridged.
     # If the mode is "whitelist", only the listed chats can be bridged.
-    mode: blacklist
+    mode: whitelist
     # The list of group/channel IDs to filter.
-    list: []
+    # list: []
     # How to handle direct chats:
     # If users is "null", direct chats will follow the previous settings.
     # If users is "true", direct chats will always be bridged.
     # If users is "false", direct chats will never be bridged.
-    users: true
+    users: null
 
   # The prefix for commands. Only required in non-management rooms.
   command_prefix: "!tg"

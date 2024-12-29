@@ -1,0 +1,3 @@
+{
+  "restrictBaseUrl": "https://${HOMESERVER_FQDN}"
+}
