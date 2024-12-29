@@ -7,7 +7,7 @@ namespaces:
     - regex: "@telegram:${DOMAIN}" # Telegram Service Bot
       exclusive: true
     - regex: "@telegram_.*:${DOMAIN}"
-      exclusive: true
+      exclusive: false
   aliases:
     - regex: "#telegram_.+:${DOMAIN}"
       exclusive: true
