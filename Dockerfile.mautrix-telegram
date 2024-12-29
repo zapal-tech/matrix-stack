@@ -2,4 +2,4 @@ FROM dock.mau.dev/mautrix/telegram:v0.15.2
 
 RUN yq -i '.bridge.filter.users |= null' example-config.yaml
 
-CMD ['python3', '-m', 'mautrix_telegram', '-c', '/data/config.yaml']
+CMD python3 -m mautrix_telegram -c /data/config.yaml
