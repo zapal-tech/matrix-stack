@@ -1,3 +1,0 @@
-FROM dock.mau.dev/mautrix/telegram:v0.15.2
-
-RUN yq -i '.bridge.filter.users |= null' example-config.yaml

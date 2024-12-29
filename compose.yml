@@ -567,16 +567,15 @@ services:
       init:
         condition: service_completed_successfully
 
-  mautrix-telegram:
-    build:
-      dockerfile: Dockerfile.mautrix-telegram
-    restart: unless-stopped
-    environment:
-      MAUTRIX_DIRECT_STARTUP: true
-    volumes:
-      - ${VOLUME_PATH}/data/mautrix-telegram:/data
-    networks:
-      - backend
-    depends_on:
-      init:
-        condition: service_completed_successfully
+  # mautrix-telegram:
+  #   image: dock.mau.dev/mautrix/telegram:v0.15.2
+  #   restart: unless-stopped
+  #   environment:
+  #     MAUTRIX_DIRECT_STARTUP: true
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/mautrix-telegram:/data
+  #   networks:
+  #     - backend
+  #   depends_on:
+  #     init:
+  #       condition: service_completed_successfully

@@ -483,11 +483,11 @@ bridge:
     mode: whitelist
     # The list of group/channel IDs to filter.
     list: []
-    users: null
     # How to handle direct chats:
     # If users is "null", direct chats will follow the previous settings.
     # If users is "true", direct chats will always be bridged.
     # If users is "false", direct chats will never be bridged.
+    users: null
 
   # The prefix for commands. Only required in non-management rooms.
   command_prefix: "!tg"
