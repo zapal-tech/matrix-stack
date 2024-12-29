@@ -571,6 +571,8 @@ services:
     image: dock.mau.dev/mautrix/telegram:v0.15.2
     command:
       [
+        "bash",
+        "-c",
         "yq",
         "-i",
         "'.bridge.filter.users |= null'",
