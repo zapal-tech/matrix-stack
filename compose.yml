@@ -430,6 +430,10 @@ services:
   synapse-admin-cli:
     build:
       dockerfile: Dockerfile.admin-cli
+    networks:
+      - backend
+    volumes:
+      - ${VOLUME_PATH}/data/synadm/synadm.yaml:/root/.config/synadm.yaml:rw
     depends_on:
       init:
         condition: service_completed_successfully

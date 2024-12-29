@@ -115,6 +115,7 @@ export DOLLAR='$' # evil hack to escape dollars in config files
 	template "/data-template/mautrix-telegram"
 )
 
+template "/data-template/synadm"
 template "/data-template/synapse-admin"
 template "/data-template/hookshot"
 template "/data-template/element-web"
