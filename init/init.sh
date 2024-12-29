@@ -109,11 +109,18 @@ export DOLLAR='$' # evil hack to escape dollars in config files
 	template "/data-template/livekit"
 )
 
-(
+# If you want to re-generate the mautrix-telegram config, delete the existing config.yaml and registration.yaml
+# Backup files before deletion/changes; /data/mautrix-telegram/config.yaml - can be changed by you and by the mautrix-telegram bot
+# During `filter` and `filter-mode` commands in bot management room, keep eye on it
+
+if [[ ! -s /data/mautrix-telegram/config.yaml && ! -s /data/mautrix-telegram/registration.yaml ]]
+then
+	(
 	export SECRETS_POSTGRES_PASSWORD=$(</secrets/postgres/postgres_password)
 	export SECRETS_SYNAPSE_SHARED_SECRET_AUTHENTICATOR_SHARED_SECRET=$(</secrets/synapse/shared_secret_authenticator_shared_secret)
 	template "/data-template/mautrix-telegram"
 )
+fi
 
 template "/data-template/synadm"
 template "/data-template/synapse-admin"

@@ -482,7 +482,7 @@ bridge:
     # If the mode is "whitelist", only the listed chats can be bridged.
     mode: whitelist
     # The list of group/channel IDs to filter.
-    list: [${MAUTRIX_TELEGRAM_FILTER_LIST}]
+    list: [${MAUTRIX_TELEGRAM_INITIAL_FILTER_LIST}]
     # How to handle direct chats:
     # If users is "null", direct chats will follow the previous settings.
     # If users is "true", direct chats will always be bridged.
