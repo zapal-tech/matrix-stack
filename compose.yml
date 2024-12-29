@@ -569,7 +569,7 @@ services:
 
   mautrix-telegram:
     image: dock.mau.dev/mautrix/telegram:v0.15.2
-    command: yq -i '.bridge.filter.users |= null' example-config.yaml && python3 -m mautrix_telegram -c /data/config.yaml
+    command: yq -i '.bridge.filter.users |= null' example-config.yaml && yq -i '.bridge.filter.users |= null' /data/config.yaml && python3 -m mautrix_telegram -c /data/config.yaml
     restart: unless-stopped
     environment:
       MAUTRIX_DIRECT_STARTUP: true
