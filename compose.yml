@@ -408,17 +408,17 @@ services:
     depends_on:
       - synapse
 
-    synapse-admin:
-      image: ghcr.io/etkecc/synapse-admin:latest
-      restart: unless-stopped
-      volumes:
-        - ${VOLUME_PATH}/data/synapse-admin/config.json:/app/config.json:ro
-      # healthcheck:
-      #   test: ["CMD", "curl", "-f", "http://localhost"]
-      #   interval: 30s
-      #   timeout: 10s
-      #   retries: 10
-      #   start_period: 20s
+  synapse-admin:
+    image: ghcr.io/etkecc/synapse-admin:latest
+    restart: unless-stopped
+    volumes:
+      - ${VOLUME_PATH}/data/synapse-admin/config.json:/app/config.json:ro
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 10
+    #   start_period: 20s
 
   # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
   # mas:
