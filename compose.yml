@@ -424,6 +424,17 @@ services:
     depends_on:
       init:
         condition: service_completed_successfully
+      synapse:
+        condition: service_started
+
+  synapse-admin-cli:
+    build:
+      dockerfile: Dockerfile.admin-cli
+    depends_on:
+      init:
+        condition: service_completed_successfully
+      synapse:
+        condition: service_started
 
   # We are disabled the Matrix Auth Service for now due to the lack of support for the E2EE with bridges
   # mas:
