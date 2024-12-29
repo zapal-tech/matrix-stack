@@ -570,6 +570,8 @@ services:
   mautrix-telegram:
     image: dock.mau.dev/mautrix/telegram:v0.15.2
     restart: unless-stopped
+    environment:
+      MAUTRIX_DIRECT_STARTUP: true
     volumes:
       - ${VOLUME_PATH}/data/mautrix-telegram:/data
     networks:
