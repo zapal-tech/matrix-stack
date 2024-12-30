@@ -567,15 +567,18 @@ services:
       init:
         condition: service_completed_successfully
 
-  mautrix-telegram:
-    image: dock.mau.dev/mautrix/telegram:v0.15.2
-    restart: unless-stopped
-    environment:
-      MAUTRIX_DIRECT_STARTUP: true
-    volumes:
-      - ${VOLUME_PATH}/data/mautrix-telegram:/data
-    networks:
-      - backend
-    depends_on:
-      init:
-        condition: service_completed_successfully
+  # We are disabled the mautrix-telegram bridge due to complexity and too many edge cases to handle
+  # It was 35/65 (65% positive) experience, it's fully functional and free to use
+  # TODO: Uncomment this block if you want to use the mautrix-telegram bridge
+  # mautrix-telegram:
+  #   image: dock.mau.dev/mautrix/telegram:v0.15.2
+  #   restart: unless-stopped
+  #   environment:
+  #     MAUTRIX_DIRECT_STARTUP: true
+  #   volumes:
+  #     - ${VOLUME_PATH}/data/mautrix-telegram:/data
+  #   networks:
+  #     - backend
+  #   depends_on:
+  #     init:
+  #       condition: service_completed_successfully
